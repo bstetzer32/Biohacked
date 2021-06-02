@@ -1,4 +1,4 @@
-name: Biohacked
+name: Biohacked Fitness
 on: 
   push:
     branches:
