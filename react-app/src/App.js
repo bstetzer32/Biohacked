@@ -5,7 +5,8 @@ import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import UsersList from "./components/UsersList";
+import RoutinesPage from "./components/RoutinesPage";
+import Questionnaire from './components/Questionnaire'
 import User from "./components/User";
 import { authenticate } from "./store/session";
 
@@ -27,7 +28,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
+      <NavBar >
       <Switch>
         <Route path="/login" exact={true}>
           <LoginForm />
@@ -35,16 +36,17 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path="/users" exact={true} >
-          <UsersList/>
+        <ProtectedRoute path="/routines" exact={true} >
+          <RoutinesPage/>
         </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId" exact={true} >
-          <User />
+        <ProtectedRoute path="/questionnaires" exact={true} >
+          <Questionnaire />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true} >
-          <h1>My Home Page</h1>
+          <RoutinesPage/>
         </ProtectedRoute>
       </Switch>
+      </NavBar>
     </BrowserRouter>
   );
 }
