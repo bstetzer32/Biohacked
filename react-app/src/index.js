@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import configureStore from './store';
+import '@fontsource/roboto';
+
 
 const store = configureStore();
 
