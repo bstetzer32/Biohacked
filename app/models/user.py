@@ -9,6 +9,8 @@ class User(db.Model, UserMixin):
   username = db.Column(db.String(40), nullable = False, unique = True)
   email = db.Column(db.String(255), nullable = False, unique = True)
   hashed_password = db.Column(db.String(255), nullable = False)
+  routines = db.relationship("Routine", back_populates="user")
+  questionnaires = db.relationship("Questionnaire", back_populates="user")
 
 
   @property
