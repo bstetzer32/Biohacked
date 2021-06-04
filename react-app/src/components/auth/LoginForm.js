@@ -39,6 +39,7 @@ const LoginForm = () => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data.errors) {
+      console.log(data.errors)
       data.errors.forEach(error => {
         if (error.includes('email')) {
           setEmailErrors('Email provided not found.')
@@ -46,7 +47,6 @@ const LoginForm = () => {
         if (error.includes('password')) {
           setPasswordErrors('Password was incorrect.')
         }
-        
       });
       setErrors(data.errors);
     }
@@ -67,7 +67,7 @@ const LoginForm = () => {
   return (
     <Card>
       <form onSubmit={onLogin} className={classes.form}>
-      <Typography variant='h3'>Sign Up</Typography>
+      <Typography variant='h3'>Log In</Typography>
         <FormControl className={classes.button}>
           <TextField error={emailErrors !== ''} helperText={!email ? 'Please enter an email' : emailErrors ? emailErrors : null} value={email} label='Email' type='email' onChange={updateEmail} name="email"/>
         </FormControl>

@@ -68,18 +68,10 @@ const SignUpForm = () => {
     <Card>
       <form onSubmit={onSignUp} className={classes.form}>
       <Typography variant='h3'>Sign Up</Typography>
-        <FormControl className={classes.button}>
-          <TextField error={usernameErrors !== ''} helperText={!username ? 'Please enter an username' : usernameErrors ? usernameErrors : null} value={username} label='Username' type='username' onChange={updateUsername} name="username" required/>
-        </FormControl>
-        <FormControl className={classes.button}>
-          <TextField error={emailErrors !== ''} helperText={!email ? 'Please enter an email' : emailErrors ? emailErrors : null} value={email} label='Email' type='email' onChange={updateEmail} name="email" required/>
-        </FormControl>
-        <FormControl className={classes.button}>
-          <TextField error={passwordErrors !== ''} helperText={!password ? 'Please enter a password' : passwordErrors ? passwordErrors : null} value={password} label='Password' type='password' onChange={updatePassword} name="password" required/>
-        </FormControl>
-        <FormControl className={classes.button}>
-          <TextField error={repeatPasswordErrors !== ''} helperText={!repeatPassword ? 'Please repeat your password' : repeatPasswordErrors ? repeatPasswordErrors : null} value={repeatPassword} label='Repeat Password' type='password' onChange={updateRepeatPassword} name="password" required/>
-        </FormControl>
+          <TextField className={classes.input} error={usernameErrors !== ''} helperText={!username ? 'Please enter an username' : usernameErrors ? usernameErrors : null} value={username} label='Username' type='username' onChange={updateUsername} name="username" required/>
+          <TextField className={classes.input} error={emailErrors !== ''} helperText={!email ? 'Please enter an email' : emailErrors ? emailErrors : null} value={email} label='Email' type='email' onChange={updateEmail} name="email" required/>
+          <TextField className={classes.input} error={passwordErrors !== ''} helperText={!password ? 'Please enter a password' : passwordErrors ? passwordErrors : null} value={password} label='Password' type='password' onChange={updatePassword} name="password" required/>
+          <TextField className={classes.input} error={repeatPasswordErrors !== ''} helperText={!repeatPassword ? 'Please repeat your password' : repeatPasswordErrors ? repeatPasswordErrors : null} value={repeatPassword} label='Repeat Password' type='password' onChange={updateRepeatPassword} name="password" required/>
         {/* <div>
           <label>User Name</label>
           <input
