@@ -27,8 +27,12 @@ export default function Questionnaire() {
     const [parq7, setParq7] = useState('')
     const [barbells, setBarbells] = useState('')
     const [dumbbells, setDumbbells] = useState('')
-    // const [kettlebells, setKettlebells] = useState('')
-    // const [kettlebells, setKettlebells] = useState('')
+    const [cables, setCables] = useState('')
+    const [levers, setLevers] = useState('')
+    const [goal, setGoal] = useState('')
+    const [height, setHeight] = useState('')
+    const [weight, setWeight] = useState('')
+    const [age, setAge] = useState('')
     const classes = useStyles()
 
 
@@ -106,6 +110,43 @@ export default function Questionnaire() {
                     <RadioGroup name='barbells' onChange={(e)=>setBarbells(e.target.value)} value={barbells}>
                         <FormControlLabel value='yes' control={<Radio />} label='Yes'/>
                         <FormControlLabel value='no' control={<Radio />} label='No'/>
+                    </RadioGroup>
+                </FormControl>
+                <FormControl component='fieldset' className={classes.control}>
+                    <FormLabel component="legend">
+                        Do you have access to and feel comfortable using dumbbells with our provided exercise videos?
+                    </FormLabel>
+                    <RadioGroup name='dumbbells' onChange={(e)=>setDumbbells(e.target.value)} value={dumbbells}>
+                        <FormControlLabel value='yes' control={<Radio />} label='Yes'/>
+                        <FormControlLabel value='no' control={<Radio />} label='No'/>
+                    </RadioGroup>
+                </FormControl>
+                <FormControl component='fieldset' className={classes.control}>
+                    <FormLabel component="legend">
+                        Do you have access to and feel comfortable using standard cable machines with attatchments (wide-grip, close-grip, rope, D-handle) with our provided exercise videos?
+                    </FormLabel>
+                    <RadioGroup name='cables' onChange={(e)=>setCables(e.target.value)} value={cables}>
+                        <FormControlLabel value='yes' control={<Radio />} label='Yes'/>
+                        <FormControlLabel value='no' control={<Radio />} label='No'/>
+                    </RadioGroup>
+                </FormControl>
+                <FormControl component='fieldset' className={classes.control}>
+                    <FormLabel component="legend">
+                        Do you have access to and feel comfortable using selectorized lever equipment (specialized machines with weight stacks that are designed for a specific movement and are typically found near the entrance to the gym) with our provided exercise videos?
+                    </FormLabel>
+                    <RadioGroup name='levers' onChange={(e)=>setLevers(e.target.value)} value={levers}>
+                        <FormControlLabel value='yes' control={<Radio />} label='Yes'/>
+                        <FormControlLabel value='no' control={<Radio />} label='No'/>
+                    </RadioGroup>
+                </FormControl>
+                <FormControl component='fieldset' className={classes.control}>
+                    <FormLabel component="legend">
+                        What is your goal?
+                    </FormLabel>
+                    <RadioGroup name='levers' onChange={(e)=>setLevers(e.target.value)} value={levers}>
+                        <FormControlLabel value='increase' control={<Radio />} label='Increase Strength/Size'/>
+                        <FormControlLabel value='decrease' control={<Radio />} label='Decrease Body Fat'/>
+                        <FormControlLabel value='maintain' control={<Radio />} label='Maintenance'/>
                     </RadioGroup>
                 </FormControl>
             </form>

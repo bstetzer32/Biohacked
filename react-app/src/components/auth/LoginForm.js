@@ -39,6 +39,7 @@ const LoginForm = () => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data.errors) {
+      console.log(data.errors)
       data.errors.forEach(error => {
         if (error.includes('email')) {
           setEmailErrors('Email provided not found.')
@@ -46,7 +47,6 @@ const LoginForm = () => {
         if (error.includes('password')) {
           setPasswordErrors('Password was incorrect.')
         }
-        
       });
       setErrors(data.errors);
     }

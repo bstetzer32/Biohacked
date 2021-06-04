@@ -44,7 +44,7 @@ export default function RoutinesPage() {
             <Card className={classes.button}>
                 <Link to='/questionnaires'>
                     <IconButton>
-                        <FontAwesomeIcon icon={faPlusCircle} button/>
+                        <FontAwesomeIcon icon={faPlusCircle}/>
                         <Typography variant='button'>Create Routine</Typography>
                     </IconButton>
                 </Link>
