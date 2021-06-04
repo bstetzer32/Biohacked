@@ -1,0 +1,24 @@
+from .db import db
+
+class WorkoutExerciseResult(db.Model):
+    __tablename__ = 'workout_exercise_results'
+
+    id = db.Column(db.Integer, primary_key = True)
+    sets = db.Column(db.Integer)
+    reps = db.Column(db.Integer)
+    load = db.Column(db.Integer)
+    time = db.Column(db.Integer)
+    workout_exercise_id = db.Column(db.Integer, db.ForeignKey("workout_exercises.id"))
+
+    workout_exercise = db.relationship("WorkoutExercise", back_populates="results")
+
+    def to_dict(self):
+
+        return {
+            "id": self.id,
+            "sets": self.sets,
+            "reps": self.reps,
+            "load": self.load,
+            "time": self.time,
+            "workout_exercise_id": self.workout_exercise_id,
+        }

@@ -68,12 +68,8 @@ const LoginForm = () => {
     <Card>
       <form onSubmit={onLogin} className={classes.form}>
       <Typography variant='h3'>Log In</Typography>
-        <FormControl className={classes.button}>
-          <TextField error={emailErrors !== ''} helperText={!email ? 'Please enter an email' : emailErrors ? emailErrors : null} value={email} label='Email' type='email' onChange={updateEmail} name="email"/>
-        </FormControl>
-        <FormControl className={classes.button}>
-          <TextField error={passwordErrors !== ''} helperText={!password ? 'Please enter a password' : passwordErrors ? passwordErrors : null} value={password} label='Password' type='password' onChange={updatePassword} name="password"/>
-        </FormControl>
+          <TextField className={classes.input} error={emailErrors !== ''} helperText={!email ? 'Please enter an email' : emailErrors ? emailErrors : null} value={email} label='Email' type='email' onChange={updateEmail} name="email"/>
+          <TextField className={classes.input} error={passwordErrors !== ''} helperText={!password ? 'Please enter a password' : passwordErrors ? passwordErrors : null} value={password} label='Password' type='password' onChange={updatePassword} name="password"/>
           <Button type="submit" className={classes.button} variant="contained">Login</Button>
       </form>
     </Card>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {FormControl, FormLabel, RadioGroup, FormControlLabel, Button, Radio, Paper } from '@material-ui/core';
+import { useSelector, useDispatch } from "react-redux";
+import {sendQuestionnaire} from "../store/routines";
+import {FormControl, FormLabel, RadioGroup, FormControlLabel, Button, Radio, Paper, TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -9,10 +11,20 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         padding: '2.5%'
     },
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
     control: {
         display: 'flex',
         padding: '2.5%',
         flexDirection: 'column',
+
+    },
+    button: {
+        display: 'flex',
+        margin: '2.5%',
+        alignSelf: 'center',
 
     }
 }))
@@ -34,12 +46,37 @@ export default function Questionnaire() {
     const [weight, setWeight] = useState('')
     const [age, setAge] = useState('')
     const classes = useStyles()
+    const user = useSelector(state => state.session.user)
+    const dispatch = useDispatch()
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const questionnaire = {
+            user_id: user.id,
+            parq1,
+            parq2,
+            parq3,
+            parq4,
+            parq5,
+            parq6,
+            parq7,
+            barbells,
+            dumbbells,
+            cables,
+            levers,
+            goal,
+            height,
+            weight,
+            age
+        }
+        dispatch(sendQuestionnaire(questionnaire))
+    }
 
 
 
     return (
         <Paper className={classes.root}>
-            <form>
+            <form className={classes.form} onSubmit={onSubmit}>
                 <FormControl component='fieldset' className={classes.control}>
                     <FormLabel component="legend">
                         Has your doctor ever said that you have a heart condition and that you should only perform physical activity recommended by a doctor?
@@ -143,12 +180,31 @@ export default function Questionnaire() {
                     <FormLabel component="legend">
                         What is your goal?
                     </FormLabel>
-                    <RadioGroup name='levers' onChange={(e)=>setLevers(e.target.value)} value={levers}>
+                    <RadioGroup name='goal' onChange={(e)=>setGoal(e.target.value)} value={goal}>
                         <FormControlLabel value='increase' control={<Radio />} label='Increase Strength/Size'/>
                         <FormControlLabel value='decrease' control={<Radio />} label='Decrease Body Fat'/>
                         <FormControlLabel value='maintain' control={<Radio />} label='Maintenance'/>
                     </RadioGroup>
                 </FormControl>
+                <div className={classes.control}>
+                    <FormLabel component="legend">
+                        What is your current height in inches?
+                    </FormLabel>
+                    <TextField value={height} label="Height" name="height" onChange={(e)=>setHeight(e.target.value)}/>
+                </div>
+                <div className={classes.control}>
+                    <FormLabel component="legend">
+                        What is your current weight in pounds?
+                    </FormLabel>
+                    <TextField value={weight} label="Weight" name="weight" onChange={(e)=>setWeight(e.target.value)}/>
+                </div>
+                <div className={classes.control}>
+                    <FormLabel component="legend">
+                        What is your current age?
+                    </FormLabel>
+                    <TextField value={age} label="Age" name="age" onChange={(e)=>setAge(e.target.value)}/>
+                </div>
+                <Button type="submit" className={classes.button} variant="contained" >Submit</Button>
             </form>
         </Paper>
     )
