@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {Link, useParams} from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import WorkoutTile from "./WorkoutTile";
+import ExerciseTile from "./ExerciseTile";
 import { makeStyles } from '@material-ui/core/styles';
 import {Card, CardContent, IconButton, Typography } from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';

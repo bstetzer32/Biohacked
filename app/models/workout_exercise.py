@@ -30,6 +30,8 @@ class WorkoutExercise(db.Model):
 
         return {
             "id": self.id,
+            "movement": self.exercise.movement.name,
+            "modality": self.exercise.modality,
             "max": self.max,
             "exercise_id": self.exercise_id,
             "api_id": self.exercise.api_id,
