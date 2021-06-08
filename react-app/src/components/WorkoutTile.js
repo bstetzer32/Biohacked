@@ -21,21 +21,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function RoutineTile({routine}) {
+export default function WorkoutTile({workout, id}) {
     const classes = useStyles()
 
     return (
         <Card className={classes.root}>
-            <Typography>Goal: {routine.questionnaire.goal === "increase" ? "Increase Muscle Strength/Size" : routine.questionnaire.goal === "decrease" ? "Decrease Bodyfat" : "Maintain Fitness Levels"}</Typography>
-            <Typography>Barbells: {routine.questionnaire.barbell ? "Yes" : "No"}</Typography>
-            <Typography>Dumbbells: {routine.questionnaire.dumbbell ? "Yes" : "No"}</Typography>
-            <Typography>Cable Equipment: {routine.questionnaire.cable ? "Yes" : "No"}</Typography>
-            <Typography>Lever Equipment: {routine.questionnaire.lever ? "Yes" : "No"}</Typography>
-            <Typography>Started On: {routine.created_at}</Typography>
+            <Typography>Day {workout.order}</Typography>
             <CardActions>
-                <Link to={`/routines/${routine.id}`}>
+                <Link to={`/routines/${id}/workouts/${workout.id}`}>
                     <Button>
-                        <Typography variant="button">Go To Routine</Typography>
+                        <Typography variant="button">Start Workout</Typography>
                         <div/>
                         <FontAwesomeIcon icon={faDumbbell}/>
                     </Button>

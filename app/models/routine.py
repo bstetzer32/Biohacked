@@ -28,7 +28,7 @@ class Routine(db.Model):
 
         return {
             "id": self.id,
-            "questionnaire_id": self.questionnaire_id,
+            "questionnaire": self.questionnaire.to_routine_dict(),
             "created_at": self.created_at,
             "workouts": [workout.to_routine_dict() for workout in self
                          .workouts]

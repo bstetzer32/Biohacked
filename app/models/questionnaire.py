@@ -48,3 +48,13 @@ class Questionnaire(db.Model):
             "age": self.age,
             "created_at": self.created_at
         }
+
+    def to_routine_dict(self):
+        return {
+            "id": self.id,
+            "barbell": True if self.barbell == "barbell" else False,
+            "dumbbell": True if self.dumbbell == "dumbbell" else False,
+            "cable": True if self.cable == "cable" else False,
+            "lever": True if self.lever == "lever" else False,
+            "goal": self.goal,
+        }

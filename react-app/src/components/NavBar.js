@@ -20,7 +20,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-const drawerWidth = 160;
+const drawerWidth = "160pt";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,9 +33,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   appBar: {
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
+      // backgroundImage: "url(/banner.png)",
+      // backgroundSize: "contain",
+      // backgroundPosition: "center",
+      // height: "38%",
+      backgroundColor: "#89d7ff",
+      [theme.breakpoints.up('sm')]: {
+        width: `calc(100% - ${drawerWidth})`,
+        marginLeft: drawerWidth,
     },
   },
   menuButton: {
@@ -52,6 +57,11 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1
   },
+  title: {
+    fontWeight: "900",
+    fontStyle: "italic",
+    width: "100%"
+  }
 }));
 
 const NavBar = (props) => {
@@ -119,7 +129,7 @@ const NavBar = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap className={classes.title}>
             Biohacked Fitness
           </Typography>
         </Toolbar>

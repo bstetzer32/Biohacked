@@ -6,6 +6,7 @@ import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import RoutinesPage from "./components/RoutinesPage";
+import RoutinePage from "./components/RoutinePage";
 import Questionnaire from './components/Questionnaire'
 import User from "./components/User";
 import { authenticate } from "./store/session";
@@ -38,6 +39,9 @@ function App() {
         </Route>
         <ProtectedRoute path="/routines" exact={true} >
           <RoutinesPage/>
+        </ProtectedRoute>
+        <ProtectedRoute path="/routines/:id">
+          <RoutinePage/>
         </ProtectedRoute>
         <ProtectedRoute path="/questionnaires" exact={true} >
           <Questionnaire />
