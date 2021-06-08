@@ -2,7 +2,8 @@ from urllib.request import Request, urlopen
 from urllib.parse import urlencode, unquote
 from json import loads, dumps
 
-global_get_params = {"exercisename": "burpee"}
+global_get_params = { "exercisename":"Bridge"}
+# "exercisename": "Standing", "apparatus":"[lever,cable,barbell,dumbbell]", "bodypart":"Shoulders"
 # credentials = {"username":"YOUR_USERNAME","password":"YOUR_PASSWORD"}
 credentials = {"username":"benjaminsexrx","password":"kL5gus3h"}
 global_auth_link_host = "204.235.60.194"

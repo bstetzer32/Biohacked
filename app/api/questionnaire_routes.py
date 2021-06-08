@@ -5,6 +5,7 @@ from app.models import User, Questionnaire, db
 
 questionnaire_routes = Blueprint('questionnaire', __name__)
 
+
 @questionnaire_routes.route('', methods=['POST'])
 @login_required
 def post_questionnaire():
