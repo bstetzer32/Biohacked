@@ -21,3 +21,12 @@ class Workout(db.Model):
             "order": self.order,
             "routine_id": self.routine_id
         }
+
+    def to_routine_dict(self):
+
+        return {
+            "id": self.id,
+            "order": self.order,
+            "exercises": [exercise.to_workout_dict() for exercise in self
+                          .workout_exercises]
+        }

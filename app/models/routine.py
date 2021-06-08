@@ -23,3 +23,13 @@ class Routine(db.Model):
             "questionnaire_id": self.questionnaire_id,
             "created_at": self.created_at
         }
+
+    def to_user_dict(self):
+
+        return {
+            "id": self.id,
+            "questionnaire_id": self.questionnaire_id,
+            "created_at": self.created_at,
+            "workouts": [workout.to_routine_dict() for workout in self
+                         .workouts]
+        }

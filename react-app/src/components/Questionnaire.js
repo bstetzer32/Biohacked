@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import {useHistory} from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import {sendQuestionnaire} from "../store/routines";
 import {FormControl, FormLabel, RadioGroup, FormControlLabel, Button, Radio, Paper, TextField } from '@material-ui/core';
+import { authenticate } from "../store/session";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,10 +39,10 @@ export default function Questionnaire() {
     const [parq5, setParq5] = useState('')
     const [parq6, setParq6] = useState('')
     const [parq7, setParq7] = useState('')
-    const [barbells, setBarbells] = useState('')
-    const [dumbbells, setDumbbells] = useState('')
-    const [cables, setCables] = useState('')
-    const [levers, setLevers] = useState('')
+    const [barbell, setBarbell] = useState('')
+    const [dumbbell, setDumbbell] = useState('')
+    const [cable, setCable] = useState('')
+    const [lever, setLever] = useState('')
     const [goal, setGoal] = useState('')
     const [height, setHeight] = useState('')
     const [weight, setWeight] = useState('')
@@ -48,6 +50,7 @@ export default function Questionnaire() {
     const classes = useStyles()
     const user = useSelector(state => state.session.user)
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -60,16 +63,19 @@ export default function Questionnaire() {
             parq5,
             parq6,
             parq7,
-            barbells,
-            dumbbells,
-            cables,
-            levers,
+            barbell,
+            dumbbell,
+            cable,
+            lever,
             goal,
             height,
             weight,
             age
         }
-        dispatch(sendQuestionnaire(questionnaire))
+        dispatch(sendQuestionnaire(questionnaire)).then(
+            ()=> {dispatch(authenticate())}
+        ).then(()=>history.push('/routines'))
+        
     }
 
 
@@ -144,8 +150,8 @@ export default function Questionnaire() {
                     <FormLabel component="legend">
                         Do you have access to and feel comfortable using a standard barbell setup (freeheld, rack, and bench) with our provided exercise videos?
                     </FormLabel>
-                    <RadioGroup name='barbells' onChange={(e)=>setBarbells(e.target.value)} value={barbells}>
-                        <FormControlLabel value='yes' control={<Radio />} label='Yes'/>
+                    <RadioGroup name='barbell' onChange={(e)=>setBarbell(e.target.value)} value={barbell}>
+                        <FormControlLabel value='barbell' control={<Radio />} label='Yes'/>
                         <FormControlLabel value='no' control={<Radio />} label='No'/>
                     </RadioGroup>
                 </FormControl>
@@ -153,8 +159,8 @@ export default function Questionnaire() {
                     <FormLabel component="legend">
                         Do you have access to and feel comfortable using dumbbells with our provided exercise videos?
                     </FormLabel>
-                    <RadioGroup name='dumbbells' onChange={(e)=>setDumbbells(e.target.value)} value={dumbbells}>
-                        <FormControlLabel value='yes' control={<Radio />} label='Yes'/>
+                    <RadioGroup name='dumbbell' onChange={(e)=>setDumbbell(e.target.value)} value={dumbbell}>
+                        <FormControlLabel value='dumbbell' control={<Radio />} label='Yes'/>
                         <FormControlLabel value='no' control={<Radio />} label='No'/>
                     </RadioGroup>
                 </FormControl>
@@ -162,8 +168,8 @@ export default function Questionnaire() {
                     <FormLabel component="legend">
                         Do you have access to and feel comfortable using standard cable machines with attatchments (wide-grip, close-grip, rope, D-handle) with our provided exercise videos?
                     </FormLabel>
-                    <RadioGroup name='cables' onChange={(e)=>setCables(e.target.value)} value={cables}>
-                        <FormControlLabel value='yes' control={<Radio />} label='Yes'/>
+                    <RadioGroup name='cable' onChange={(e)=>setCable(e.target.value)} value={cable}>
+                        <FormControlLabel value='cable' control={<Radio />} label='Yes'/>
                         <FormControlLabel value='no' control={<Radio />} label='No'/>
                     </RadioGroup>
                 </FormControl>
@@ -171,8 +177,8 @@ export default function Questionnaire() {
                     <FormLabel component="legend">
                         Do you have access to and feel comfortable using selectorized lever equipment (specialized machines with weight stacks that are designed for a specific movement and are typically found near the entrance to the gym) with our provided exercise videos?
                     </FormLabel>
-                    <RadioGroup name='levers' onChange={(e)=>setLevers(e.target.value)} value={levers}>
-                        <FormControlLabel value='yes' control={<Radio />} label='Yes'/>
+                    <RadioGroup name='lever' onChange={(e)=>setLever(e.target.value)} value={lever}>
+                        <FormControlLabel value='lever' control={<Radio />} label='Yes'/>
                         <FormControlLabel value='no' control={<Radio />} label='No'/>
                     </RadioGroup>
                 </FormControl>

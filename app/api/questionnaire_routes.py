@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from app.forms import QuestionnaireForm
 from app.models import User, Questionnaire, db
+from ..exrx.routine_builder import routine_builder
 
 questionnaire_routes = Blueprint('questionnaire', __name__)
 
@@ -12,6 +13,7 @@ def post_questionnaire():
     form = QuestionnaireForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        print('pass')
         questionnaire = Questionnaire(
             user_id=form.data['user_id'],
             parq1=form.data['parq1'],
@@ -21,10 +23,10 @@ def post_questionnaire():
             parq5=form.data['parq5'],
             parq6=form.data['parq6'],
             parq7=form.data['parq7'],
-            barbells=form.data['barbells'],
-            dumbbells=form.data['dumbbells'],
-            cables=form.data['cables'],
-            levers=form.data['levers'],
+            barbell=form.data['barbell'],
+            dumbbell=form.data['dumbbell'],
+            cable=form.data['cable'],
+            lever=form.data['lever'],
             goal=form.data['goal'],
             height=form.data['height'],
             weight=form.data['weight'],
@@ -32,3 +34,7 @@ def post_questionnaire():
         )
         db.session.add(questionnaire)
         db.session.commit()
+        routine_builder(questionnaire)
+        return {}
+    print('fail')
+    return {}
