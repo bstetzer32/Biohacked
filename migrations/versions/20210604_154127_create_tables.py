@@ -32,7 +32,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
     sa.Column('sets', sa.Integer(), nullable=True),
-    sa.Column('reps', sa.Integer(), nullable=True),
+    sa.Column('reps', sa.String(length=50), nullable=True),
     sa.Column('tempo', sa.String(length=50), nullable=True),
     sa.Column('time', sa.Integer(), nullable=True),
     sa.Column('base_set', sa.Integer(), nullable=True),
