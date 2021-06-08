@@ -8,6 +8,7 @@ def seed_schemes():
         reps="18,15,12,15+",
         tempo="4,2,1",
         base_set=2,
+        rest=90,
         modifier=0.30,
         direction=True
     )
@@ -17,6 +18,7 @@ def seed_schemes():
         reps="12,9,6,9+",
         tempo="2,0,2",
         base_set=2,
+        rest=60,
         modifier=0.15,
         direction=True
     )
@@ -26,6 +28,7 @@ def seed_schemes():
         reps="15,12,9,12+",
         tempo="2,0,2",
         base_set=2,
+        rest=60,
         modifier=0.23,
         direction=True
     )
@@ -35,6 +38,7 @@ def seed_schemes():
         reps="18,15,18+",
         tempo="4,2,1",
         base_set=1,
+        rest=90,
         modifier=0.37,
         direction=True
     )
@@ -44,6 +48,7 @@ def seed_schemes():
         reps="12,9,12+",
         tempo="2,0,2",
         base_set=1,
+        rest=60,
         modifier=0.23,
         direction=True
     )
@@ -53,6 +58,7 @@ def seed_schemes():
         reps="15,12,15+",
         tempo="2,0,2",
         base_set=1,
+        rest=60,
         modifier=0.30,
         direction=True
     )
@@ -60,38 +66,45 @@ def seed_schemes():
         name="Core Dynamic",
         sets=3,
         reps="20",
+        rest=30,
         tempo="1,0,1"
     )
     core_static = Scheme(
         name="Core Static",
         sets=3,
+        rest=30,
         time=60
     )
     stretch = Scheme(
-        name="stretch",
+        name="Stretch",
         sets=3,
+        rest=10,
         time=30
     )
     warmup = Scheme(
         name="Warmup",
         sets=2,
         reps="10",
-        tempo="4,2,1"
+        tempo="4,2,1",
+        rest=60,
     )
     tabata_1 = Scheme(
         name="TABATA 1",
         sets=8,
-        tempo="20,10"
+        time=20,
+        rest=10,
     )
     tabata_2 = Scheme(
         name="TABATA 2",
         sets=12,
-        tempo="20,10"
+        time=20,
+        rest=10,
     )
     tabata_3 = Scheme(
         name="TABATA 3",
         sets=16,
-        tempo="20,10"
+        time=20,
+        rest=10,
     )
     cooldown = Scheme(
         name="Cooldown",
