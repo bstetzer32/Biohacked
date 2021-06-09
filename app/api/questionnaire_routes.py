@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 from app.forms import QuestionnaireForm
-from app.models import User, Questionnaire, db
+from app.models import Routine, Questionnaire, db, questionnaire
 from ..exrx.routine_builder import routine_builder
 
 questionnaire_routes = Blueprint('questionnaire', __name__)
@@ -38,3 +38,17 @@ def post_questionnaire():
         return {}
     print('fail')
     return {}
+
+
+@questionnaire_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_routine(id):
+    routine = Routine.query.get(id)
+    if routine.user_id == current_user.id:
+        db.session.delete(routine)
+        db.session.commit()
+        return {}
+    else:
+        return {"errors": ["It doesn't look like this routine is yours. If you"
+                + "feel you have received this email in error, please email"
+                + "biohackedfitness@gmail.com for support"]}

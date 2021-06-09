@@ -12,7 +12,7 @@ class Workout(db.Model):
     routine = db.relationship("Routine", back_populates="workouts")
 
     workout_exercises = db.relationship(
-        "WorkoutExercise", back_populates="workout")
+        "WorkoutExercise", back_populates="workout", cascade="all, delete")
 
     def to_dict(self):
 

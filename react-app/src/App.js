@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
@@ -9,11 +9,12 @@ import RoutinesPage from "./components/RoutinesPage";
 import RoutinePage from "./components/RoutinePage";
 import WorkoutPage from "./components/WorkoutPage";
 import Questionnaire from './components/Questionnaire'
-import User from "./components/User";
+// import User from "./components/User";
 import { authenticate } from "./store/session";
+import { Typography, Card } from "@material-ui/core";
 
 function App() {
-  const user = useSelector(state => state.session.user)
+  useSelector(state => state.session.user)
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
 
@@ -22,7 +23,7 @@ function App() {
       await dispatch(authenticate());
       setLoaded(true);
     })();
-  }, []);
+  }, [dispatch]);
 
   if (!loaded) {
     return null;
@@ -51,7 +52,14 @@ function App() {
           <Questionnaire />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true} >
-          <RoutinesPage/>
+          <Card>
+            <Typography variant="h5">
+              Welcome to the Biohacked Fitness App.
+              <br/>
+              <br/>
+              Proceed to <Link to='/routines'>Routines</Link> to fill out a questionnaire and receive a peronalized workout.
+            </Typography>
+          </Card>
         </ProtectedRoute>
       </Switch>
       </NavBar>

@@ -86,7 +86,7 @@ def routine_builder(questionnaire):
                             max=0,
                             scheme_id=4,
                             exercise_id=(int(movements[26])
-                                         if 25 in movements else 1)
+                                         if 26 in movements else 1)
                         ),
                         WorkoutExercise(
                             max=0,
