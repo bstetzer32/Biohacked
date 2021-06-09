@@ -1,4 +1,6 @@
+from sqlalchemy.orm import backref
 from .db import db
+from .scheme_set_rep import scheme_set_rep
 
 
 class Scheme(db.Model):
@@ -17,6 +19,8 @@ class Scheme(db.Model):
 
     workout_exercises = db.relationship(
         "WorkoutExercise", back_populates="scheme")
+    # set_reps = db.relationship('SetRep', secondary=scheme_set_rep,
+    #                            backref=db.backref('schemes'))
 
     def to_dict(self):
 

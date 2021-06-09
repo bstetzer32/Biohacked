@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import { Redirect } from "react-router-dom";
 import { login } from "../../store/session";
-import {FormControl, FormLabel, RadioGroup, TextField, Button, Radio, Card, Typography } from '@material-ui/core';
+import { TextField, Button, Card, Typography } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const LoginForm = () => {
-  const [errors, setErrors] = useState([]);
+  // const [errors, setErrors] = useState([]);
   const [emailErrors, setEmailErrors] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +41,7 @@ const LoginForm = () => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data.errors) {
-      console.log(data.errors)
+      // console.log(data.errors)
       data.errors.forEach(error => {
         if (error.includes('email')) {
           setEmailErrors('Email provided not found.')
@@ -50,7 +50,6 @@ const LoginForm = () => {
           setPasswordErrors('Password was incorrect.')
         }
       });
-      setErrors(data.errors);
     }
   };
 
@@ -58,7 +57,7 @@ const LoginForm = () => {
     e.preventDefault();
     const data = await dispatch(login('demo@aa.io', 'password'));
     if (data.errors) {
-      console.log(data.errors)
+      // console.log(data.errors)
       data.errors.forEach(error => {
         if (error.includes('email')) {
           setEmailErrors('Email provided not found.')
@@ -67,7 +66,6 @@ const LoginForm = () => {
           setPasswordErrors('Password was incorrect.')
         }
       });
-      setErrors(data.errors);
     }
   };
 

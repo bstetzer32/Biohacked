@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, {  } from "react";
 import {Link} from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import RoutineTile from "./RoutineTile";
 import { makeStyles } from '@material-ui/core/styles';
 import {Card, CardContent, IconButton, Typography } from '@material-ui/core';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActions from '@material-ui/core/CardActions';
+// import CardMedia from '@material-ui/core/CardMedia';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
@@ -33,7 +33,7 @@ export default function RoutinesPage() {
 
     return (
         <div className={classes.root}>
-            {routines ? routines.map((routine, i) => <RoutineTile routine={routine} key={`routine${i}`}/>) :
+            {routines.length ? routines.map((routine, i) => <RoutineTile routine={routine} key={`routine${i}`}/>) :
             <Card>
                 <CardContent>
                     <Typography variant='subtitle1'>

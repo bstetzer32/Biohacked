@@ -20,3 +20,18 @@ export const sendQuestionnaire = (questionnaire) => async (dispatch) => {
     // dispatch(removeUser());
     return {}
 };
+
+export const deleteRoutine = (id) => async (dispatch) => {
+    const response = await fetch(`/api/questionnaire/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
+    const data = await response.json();
+    if (data.errors) {
+        return data;
+    }
+    // dispatch(removeUser());
+    return {}
+};

@@ -13,7 +13,8 @@ class Routine(db.Model):
         db.DateTime(), default=datetime.datetime.now(), nullable=False)
     user = db.relationship("User", back_populates="routines")
     questionnaire = db.relationship("Questionnaire", back_populates="routine")
-    workouts = db.relationship("Workout", back_populates="routine")
+    workouts = db.relationship(
+        "Workout", back_populates="routine", cascade="all, delete")
 
     def to_dict(self):
 

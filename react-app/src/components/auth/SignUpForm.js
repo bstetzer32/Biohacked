@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"
 import { makeStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
-import {FormControl, FormLabel, RadioGroup, TextField, Button, Radio, Card, Typography } from '@material-ui/core';
+import { TextField, Button, Card, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,6 +36,12 @@ const SignUpForm = () => {
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const classes = useStyles()
+  useEffect(() => {
+    setUsernameErrors("")
+    setEmailErrors("")
+    setPasswordErrors("")
+    setRepeatPasswordErrors("")
+  },[setUsernameErrors, setEmailErrors, setPasswordErrors, setRepeatPasswordErrors])
 
   const onSignUp = async (e) => {
     e.preventDefault();

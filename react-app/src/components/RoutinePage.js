@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { } from "react";
 import {Link, useParams} from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import WorkoutTile from "./WorkoutTile";
 import { makeStyles } from '@material-ui/core/styles';
-import {Card, CardContent, IconButton, Typography, Button } from '@material-ui/core';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardMedia from '@material-ui/core/CardMedia';
+import {Card, Typography, Button } from '@material-ui/core';
+// import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActions from '@material-ui/core/CardActions';
+// import CardMedia from '@material-ui/core/CardMedia';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { faDumbbell } from '@fortawesome/free-solid-svg-icons'
+// import { faDumbbell } from '@fortawesome/free-solid-svg-icons'
 
 
 const useStyles = makeStyles((theme) => ({
