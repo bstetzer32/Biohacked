@@ -14,10 +14,12 @@ import { faDumbbell } from '@fortawesome/free-solid-svg-icons'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        // width: "80%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
         height: "100%",
-        margin: ".5%",
-        padding: ".5%"
+        margin: "2.5%",
+        padding: "2.5%"
     }
 }))
 

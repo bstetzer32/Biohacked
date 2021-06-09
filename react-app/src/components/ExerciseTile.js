@@ -14,19 +14,45 @@ import { faDumbbell } from '@fortawesome/free-solid-svg-icons'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        // width: "80%",
+        display: "flex",
+        flexDirection: "column",
         height: "100%",
-        margin: ".5%",
-        padding: ".5%"
+        margin: "2.5%",
+        padding: "2.5%"
     }
 }))
 
 export default function ExerciseTile({exercise}) {
     const classes = useStyles()
+    const scheme = exercise.scheme
+    const sets = {}
+    for (let i = 0; i < scheme.sets; i++) {
+        if (scheme.name === "Warmup") {
+
+        }
+        
+    }
 
     return (
         <Card className={classes.root}>
-            <Typography>{exercise.modality}{exercise.movement}</Typography>
+            <Typography variant="h6">
+                {exercise.scheme.name !== 'Core Dynamic' && exercise.movement !== 'High Intensity Interval Training' && exercise.scheme.name !== 'Warmup' && exercise.scheme.name !== 'Stretch' && exercise.modality.slice(0,1).toUpperCase()}{exercise.scheme.name !== 'Core Dynamic' && exercise.movement !== 'High Intensity Interval Training' && exercise.scheme.name !== 'Warmup' && exercise.scheme.name !== 'Stretch' && exercise.modality.slice(1)} {exercise.movement}
+            </Typography>
+            <Typography>
+                Sets: {exercise.scheme.sets}
+            </Typography>
+            <Typography>
+                {exercise.scheme.reps && `Reps: ${exercise.scheme.reps}`}
+            </Typography>
+            <Typography>
+                {exercise.scheme.tempo && `Tempo: ${exercise.scheme.tempo}(Eccentric, Isometric, Concentric)`}
+            </Typography>
+            <Typography>
+                {exercise.scheme.time && `Work: ${exercise.scheme.time}s`}
+            </Typography>
+            <Typography>
+                {exercise.scheme.rest && `Rest: ${exercise.scheme.rest}s`}
+            </Typography>
             <CardActions>
             </CardActions>
         </Card>

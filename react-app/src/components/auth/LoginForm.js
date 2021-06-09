@@ -8,7 +8,8 @@ import {FormControl, FormLabel, RadioGroup, TextField, Button, Radio, Card, Typo
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '30%'
+        display: 'flex',
+        flexDirection: "column"
     },
     form: {
         display: 'flex',
@@ -17,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         width: '50%',
-        margin: '0.5%'
+        margin: '0.5%',
+        alignSelf: "center"
     },
     input: {
         width: '50%',
@@ -52,6 +54,23 @@ const LoginForm = () => {
     }
   };
 
+  const demoLogin = async (e) => {
+    e.preventDefault();
+    const data = await dispatch(login('demo@aa.io', 'password'));
+    if (data.errors) {
+      console.log(data.errors)
+      data.errors.forEach(error => {
+        if (error.includes('email')) {
+          setEmailErrors('Email provided not found.')
+        }
+        if (error.includes('password')) {
+          setPasswordErrors('Password was incorrect.')
+        }
+      });
+      setErrors(data.errors);
+    }
+  };
+
   const updateEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -65,13 +84,14 @@ const LoginForm = () => {
   }
 
   return (
-    <Card>
+    <Card className={classes.root}>
       <form onSubmit={onLogin} className={classes.form}>
       <Typography variant='h3'>Log In</Typography>
           <TextField className={classes.input} error={emailErrors !== ''} helperText={!email ? 'Please enter an email' : emailErrors ? emailErrors : null} value={email} label='Email' type='email' onChange={updateEmail} name="email"/>
           <TextField className={classes.input} error={passwordErrors !== ''} helperText={!password ? 'Please enter a password' : passwordErrors ? passwordErrors : null} value={password} label='Password' type='password' onChange={updatePassword} name="password"/>
           <Button type="submit" className={classes.button} variant="contained">Login</Button>
       </form>
+      <Button type="submit" onClick={demoLogin} className={classes.button} variant="contained">Demo Login</Button>
     </Card>
   );
 };

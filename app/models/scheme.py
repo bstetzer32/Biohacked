@@ -27,6 +27,7 @@ class Scheme(db.Model):
             "reps": self.reps,
             "tempo": self.tempo,
             "time": self.time,
+            "rest": self.rest,
             "base_set": self.base_set,
             "modifier": self.modifier,
             "direction": self.direction
@@ -41,6 +42,7 @@ class Scheme(db.Model):
             "reps": self.reps,
             "tempo": self.tempo,
             "time": self.time,
+            "rest": self.rest,
             "base_set": self.base_set,
             "modifier": self.modifier,
             "direction": self.direction
