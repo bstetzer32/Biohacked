@@ -77,18 +77,18 @@ export default function Questionnaire() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        if (!(parq1||
-            parq2||
-            parq3||
-            parq4||
-            parq5||
-            parq6||
-            parq7||
-            barbell||
-            dumbbell||
-            cable||
-            lever||
-            goal)) {
+        if (!parq1||
+            !parq2||
+            !parq3||
+            !parq4||
+            !parq5||
+            !parq6||
+            !parq7||
+            !barbell||
+            !dumbbell||
+            !cable||
+            !lever||
+            !goal) {
             setErrors(["Please choose an option for each select field."])
         }
         if ((parq1 || parq2 || parq3 || parq4 || parq5 || parq6 || parq7) === 'yes') {
@@ -151,7 +151,7 @@ export default function Questionnaire() {
                                 </Typography></li>)
                             })}</ul>
                             <Typography variant="subtitle2">
-                                In order to ensure your health and safety and in accordance with the National Academy of Sports Medicine's scope of practice for certified personal trainers, we cannot provide a workout to you at this time.
+                                In order to ensure your health and safety and in accordance with the National Academy of Sports Medicine's stated scope of practice for certified personal trainers, we cannot provide a workout to you at this time.
                             </Typography>
                         </div>)
 
