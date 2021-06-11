@@ -34,7 +34,8 @@ def submit_results():
             )
             db.session.add(exercise_result)
         if 'load' in last_set and last_set['load'] != 0:
-            exercise.max = float(last_set['load'])*(36/(37-last_set['reps']))
+            exercise.max = float(last_set['load'])*(36/(37-int(
+                                 last_set['reps'])))
             db.session.add(exercise)
     db.session.commit()
     return{}

@@ -9,7 +9,8 @@ import {Card, Button, Typography } from '@material-ui/core';
 // import CardMedia from '@material-ui/core/CardMedia';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import {sendResults} from '../store/results'
+import {sendResults, clearResults} from '../store/results'
+import { authenticate } from "../store/session";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +51,12 @@ export default function WorkoutPage() {
 
         const store = getStore.getState()
         console.log(store.results)
-        dispatch(sendResults(store.results))
+        dispatch(sendResults(store.results)).then(
+            ()=> {dispatch(authenticate()).then(
+                    ()=>{dispatch(clearResults())
+                })
+            }
+        )
     }
 
 

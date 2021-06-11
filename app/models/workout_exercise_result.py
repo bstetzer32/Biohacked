@@ -1,4 +1,5 @@
 from .db import db
+from collections import OrderedDict
 
 
 class WorkoutExerciseResult(db.Model):
@@ -29,8 +30,8 @@ class WorkoutExerciseResult(db.Model):
         }
 
     def to_exercise_dict(self):
-
-        return {
+        results = OrderedDict()
+        results = {
             "id": self.id,
             "set": self.set,
             "reps": self.reps,
@@ -39,3 +40,4 @@ class WorkoutExerciseResult(db.Model):
             "rest": self.rest,
             "scheme": self.workout_exercise.scheme.name
         }
+        return results

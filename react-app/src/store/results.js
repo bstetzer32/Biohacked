@@ -1,8 +1,13 @@
 const SET_RESULTS = 'results/setResults'
+const CLEAR_RESULTS = 'results/clearResults'
 
 export const setResults = (result) => ({
     type: SET_RESULTS,
     payload: result
+})
+
+export const clearResults = () => ({
+    type: CLEAR_RESULTS,
 })
 
 export const getResults = (exercise) => async (dispatch) => {
@@ -77,6 +82,8 @@ export default function reducer(state=initialState, action) {
         case SET_RESULTS:
             const newState = {...prevState, ...action.payload}
             return newState
+        case CLEAR_RESULTS:
+            return {}
         default:
             return state;
     }

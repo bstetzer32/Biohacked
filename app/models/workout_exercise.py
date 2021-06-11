@@ -27,7 +27,8 @@ class WorkoutExercise(db.Model):
         }
 
     def to_workout_dict(self):
-
+        results = sorted([result.to_exercise_dict()
+                         for result in self.results], key=lambda i: i['id'])
         return {
             "id": self.id,
             "movement": self.exercise.movement.name,
@@ -35,6 +36,6 @@ class WorkoutExercise(db.Model):
             "max": self.max,
             "exercise_id": self.exercise_id,
             "api_id": self.exercise.api_id,
-            "results": [result.to_exercise_dict() for result in self.results],
+            "results": results,
             "scheme": self.scheme.to_exercise_dict()
         }
