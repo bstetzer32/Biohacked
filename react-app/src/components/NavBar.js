@@ -83,30 +83,32 @@ const NavBar = (props) => {
       <div className={classes.toolbar} />
       <Divider />
         <List>
-          <ListItem button>
             <NavLink to="/" exact={true} activeClassName="active">
+          <ListItem button>
               <ListItemText primary="Home"/>
-            </NavLink>
           </ListItem>
+            </NavLink>
           {!loggedIn 
           ?
-            <><ListItem button>
+            <>
               <NavLink to="/login" exact={true} activeClassName="active">
-                <ListItemText primary="Login"/>
-              </NavLink>
-            </ListItem>
             <ListItem button>
-              <NavLink to="/sign-up" exact={true} activeClassName="active">
-                <ListItemText primary="Sign Up"/>
+                <ListItemText primary="Login"/>
+            </ListItem>
               </NavLink>
-          </ListItem></>
+              <NavLink to="/sign-up" exact={true} activeClassName="active">
+            <ListItem button>
+                <ListItemText primary="Sign Up"/>
+          </ListItem>
+              </NavLink>
+          </>
           :
           <>
-            <ListItem button>
               <NavLink to="/routines" exact={true} activeClassName="active">
+            <ListItem button>
                 <ListItemText primary="Routines"/>
-              </NavLink>
             </ListItem>
+              </NavLink>
             <ListItem button>
               <LogoutButton />
             </ListItem>

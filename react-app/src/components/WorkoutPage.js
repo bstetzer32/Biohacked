@@ -1,6 +1,6 @@
 import React, { } from "react";
 import {Link, useParams} from 'react-router-dom'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import ExerciseTile from "./ExerciseTile";
 import { makeStyles } from '@material-ui/core/styles';
 import {Card, Button, Typography } from '@material-ui/core';
@@ -9,6 +9,7 @@ import {Card, Button, Typography } from '@material-ui/core';
 // import CardMedia from '@material-ui/core/CardMedia';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import {sendResults} from '../store/results'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,9 +38,20 @@ const useStyles = makeStyles((theme) => ({
 export default function WorkoutPage() {
     const { id, workoutId }  = useParams();
     const routines = useSelector(state => state.session.user.routines)
+    const getStore = useStore()
+    const dispatch = useDispatch()
+    const results = useSelector(state => state.session.results)
     const routine = routines.find(routine => routine.id === parseInt(id))
     const workout = routine.workouts.find(workout=> workout.id === parseInt(workoutId))
     const classes = useStyles()
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const store = getStore.getState()
+        console.log(store.results)
+        dispatch(sendResults(store.results))
+    }
 
 
     return (
@@ -55,6 +67,7 @@ export default function WorkoutPage() {
                 <Button disabled></Button>
             </Card>
             {workout.exercises.map((exercise, i) => <ExerciseTile exercise={exercise} key={`exercise-tile${exercise.id}`}/>) }
+            <Button onClick={handleSubmit}>Senubmit Workout</Button>
         </div>
     )
 }

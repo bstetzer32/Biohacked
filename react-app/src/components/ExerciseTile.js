@@ -1,192 +1,161 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import {Link} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardActions, Typography, TextField, InputAdornment } from '@material-ui/core';
+import { Card, CardActions, Typography, TextField, InputAdornment, FormControl, Checkbox } from '@material-ui/core';
 // import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardContent from '@material-ui/core/CardContent';
+import CardContent from '@material-ui/core/CardContent';
 // import CardMedia from '@material-ui/core/CardMedia';
 // import Button from '@material-ui/core/Button';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faDumbbell } from '@fortawesome/free-solid-svg-icons'
-import {setResults} from '../store/results'
+import {setResults, getResults} from '../store/results'
+import ExerciseModal from './ExerciseModal'
+
+import {getExcercise} from '../store/exercises'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         flexDirection: "column",
         height: "100%",
+        width: "80%",
         margin: "2.5%",
         padding: "2.5%"
     },
-    form: {
+    content : {
         display: "flex",
         justifyContent: "space-between"
+    },
+    form: {
+        display: "flex",
+        justifyContent: "space-between",
+    },
+    formEl: {
+        margin: "5%"
     }
 }))
 
 export default function ExerciseTile({exercise}) {
-    const all_results = useSelector(state=>state.results)
-    const results = all_results[exercise.id]
+    const [isLoaded, setIsLoaded] = useState(false)
+    const res = useSelector(state=>state.results[exercise.id])
+    const results = {...res?.results}
+    console.log(results)
     const dispatch = useDispatch()
-    const res = {}
     const classes = useStyles()
     const scheme = exercise.scheme
-    // console.log(scheme.name)
-    const sets = []
-    const set_reps = scheme.reps?.split(',')
-    for (let i = 0; i < scheme.sets; i++) {
-        if (scheme.name.includes('Compound') || scheme.name.includes('Isolated')) {
-            const set = {
-                reps: parseInt(set_reps[i]),
-                load: Math.round((-0.0278 * exercise.max * parseInt(set_reps[i]) + 1.0278 * exercise.max)/5)*5,
-                rest: scheme.rest
-            }
-            sets.push(set)
-            res[i] = set
+    let sets =  res?.sets
+    useEffect(()=>{
+        if (!sets){
+            sets = Array.from(results)
+            console.log(sets)
+
         }
-        if (scheme.name.includes('Stretch') || scheme.name.includes('Static')|| scheme.name.includes('TABATA')) {
-            const set = {
-                time: scheme.time,
-                rest: scheme.rest
-            }
-            sets.push(set)
-            res[i] = set
-        }
-        if (scheme.name.includes('Warmup') || scheme.name.includes('Dynamic')) {
-            const set = {
-                reps: parseInt(set_reps[0]),
-                rest: scheme.rest
-            }
-            sets.push(set)
-            res[i] = set
-        }
-        if (scheme.name.includes('Cooldown')) {
-            const set = {
-                time: scheme.time
-            }
-            sets.push(set)
-            res[i] = set
-        }
-        
-    }
+    },[results, res])
+
     const handleLoadChange = (e) => {
         const i = e.target.name.split('-')[e.target.name.split('-').length -1]
         // console.log(e.target)
-        res[i].load = e.target.value
-        dispatch(setResults({[exercise.id]: res}))
+        results[i].load = e.target.value
+        dispatch(setResults({[exercise.id]: {results: results, sets: sets}}))
     }    
     const handleRepChange = (e) => {
         const i = e.target.name.split('-')[e.target.name.split('-').length -1]
         // console.log(e.target)
-        res[i].reps = e.target.value
-        dispatch(setResults({[exercise.id]: res}))
+        results[i].reps = e.target.value
+        dispatch(setResults({[exercise.id]: {results: results, sets: sets}}))
     }    
     const handleWorkChange = (e) => {
         const i = e.target.name.split('-')[e.target.name.split('-').length -1]
         // console.log(e.target)
-        res[i].time = e.target.value
-        dispatch(setResults({[exercise.id]: res}))
+        results[i].time = e.target.value
+        dispatch(setResults({[exercise.id]: {results: results, sets: sets}}))
     }    
     const handleRestChange = (e) => {
         const i = e.target.name.split('-')[e.target.name.split('-').length -1]
         // console.log(e.target)
-        res[i].rest = e.target.value
-        dispatch(setResults({[exercise.id]: res}))
+        results[i].rest = e.target.value
+        dispatch(setResults({[exercise.id]: {results: results, sets: sets}}))
+    }    
+    const handleCheckedChange = (e) => {
+        const i = e.target.name.split('-')[e.target.name.split('-').length -1]
+        // console.log(e.target)
+        results[i].checked = e.target.checked
+        dispatch(setResults({[exercise.id]: {results: results, sets: sets}}))
+        setIsLoaded(true)
     }
-
+    
     useEffect(()=>{
-        if (!results) {
-            dispatch(setResults({[exercise.id]: res}))
-            
-        }
-    },[res, dispatch, exercise.id, results])
+            if (!res) {
+                dispatch(getResults(exercise)).then(()=>{
+                    setIsLoaded(true)
+                })
+                
+            } else {
+                setIsLoaded(true)
+            }
+        
+    },[res, dispatch, exercise])
 
-    if (!results) {
+    if (!res || !isLoaded) {
         return null
     }
     return (
         <Card className={classes.root}>
-            <Typography variant="h6">
-                {exercise.scheme.name !== 'Core Dynamic' && exercise.movement !== 'High Intensity Interval Training' && exercise.scheme.name !== 'Warmup' && exercise.scheme.name !== 'Stretch' && exercise.modality.slice(0,1).toUpperCase()}{exercise.scheme.name !== 'Core Dynamic' && exercise.movement !== 'High Intensity Interval Training' && exercise.scheme.name !== 'Warmup' && exercise.scheme.name !== 'Stretch' && exercise.modality.slice(1)} {exercise.movement}
-            </Typography>
-            <Typography>
-                Sets: {exercise.scheme.sets}
-            </Typography>
-            <Typography>
-                {exercise.scheme.reps && `Reps: ${exercise.scheme.reps}`}
-            </Typography>
-            <Typography>
-                {exercise.scheme.tempo && `Tempo: ${exercise.scheme.tempo}(Eccentric, Isometric, Concentric)`}
-            </Typography>
-            <Typography>
-                {exercise.scheme.time && `Work: ${exercise.scheme.time}s`}
-            </Typography>
-            <Typography>
-                {exercise.scheme.rest && `Rest: ${exercise.scheme.rest}s`}
-            </Typography>
-            {exercise.max === 0 && (scheme.name !== 'Warmup' && scheme.name !== 'Stretch' && scheme.name !== "Cooldown" && !scheme.name.includes("Core")) &&<div>Since this is your first time logging this workout, start with a weight you feel comfotable with (it's always safer to underestimate).<br/> Once you log this exercise, our algorithms will update the values for your next session.</div>}
-                {(scheme.name.includes('Compound') || scheme.name.includes('Isolated')) ? sets.map((set, i) =>{
+            <CardContent className={classes.content}>
+                <div>
+                <Typography variant="h6">
+                    {exercise.scheme.name !== 'Core Dynamic' && exercise.movement !== 'High Intensity Interval Training' && exercise.scheme.name !== 'Warmup' && exercise.scheme.name !== 'Stretch' && exercise.modality.slice(0,1).toUpperCase()}{exercise.scheme.name !== 'Core Dynamic' && exercise.movement !== 'High Intensity Interval Training' && exercise.scheme.name !== 'Warmup' && exercise.scheme.name !== 'Stretch' && exercise.modality.slice(1)} {exercise.movement}
+                </Typography>
+                <Typography>
+                    Sets: {exercise.scheme.sets}
+                </Typography>
+                <Typography>
+                    {exercise.scheme.reps && `Reps: ${exercise.scheme.reps}`}
+                </Typography>
+                <Typography>
+                    {exercise.scheme.tempo && `Tempo: ${exercise.scheme.tempo}(Eccentric, Isometric, Concentric)`}
+                </Typography>
+                <Typography>
+                    {exercise.scheme.time && `Work: ${exercise.scheme.time}s`}
+                </Typography>
+                <Typography>
+                    {exercise.scheme.rest && `Rest: ${exercise.scheme.rest}s`}
+                </Typography>
+                </div>
+                <ExerciseModal id={exercise.id} api_id={exercise.api_id}/>
+                
+            </CardContent>
+            {exercise.max === 0 && (scheme.name !== 'Warmup' && scheme.name !== 'Stretch' && scheme.name !== "Cooldown" && !scheme.name.includes("Core")) &&<Typography className={classes.formEl}>Since this is your first time logging this workout, start with a weight you feel comfotable with (it's always safer to underestimate).<br/> Once you log this exercise, our algorithms will update the values for your next session.</Typography>}
+                {((scheme.name.includes('Compound') || scheme.name.includes('Isolated')) && sets) ? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
-                            <div>
-                                <p>Set</p>
-                                <p>{i + 1}</p>
-                            </div>
-                            <div>
-                                <p>Reps</p>
-                                <TextField label="Reps" value={results[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment position="end">Reps</InputAdornment>}}/>
-                            </div>
-                            <div>
-                                <p>Load</p>
-                                <TextField label="Load" value={results[i].load} name={`load-${i}`} onChange={handleLoadChange} InputProps={{endAdornment:<InputAdornment position="end">Lb</InputAdornment>}}/>
-                            </div>
-                            <div>
-                                <p>Rest</p>
-                                <TextField label="Rest" value={results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">seconds</InputAdornment>}}/>
-                            </div>
+                                <Typography className={classes.formEl}>{i + 1}</Typography>
+                                <TextField className={classes.formEl} label="Reps" value={res.results[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment position="end">Reps</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Load" value={res.results[i].load} name={`load-${i}`} onChange={handleLoadChange} InputProps={{endAdornment:<InputAdornment position="end">Lb</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <Checkbox checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
                         </form>)
-                }): (scheme.name.includes('Stretch') || scheme.name.includes('Static')|| scheme.name.includes('TABATA')) ? sets.map((set, i) =>{
+                }): ((scheme.name.includes('Stretch') || scheme.name.includes('Static')|| scheme.name.includes('TABATA')) && sets) ? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
-                            <div>
-                                <p>Set</p>
-                                <p>{i + 1}</p>
-                            </div>
-                            <div>
-                                <p>Work</p>
-                                <TextField label="Work" value={results[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment position="end">seconds</InputAdornment>}}/>
-                            </div>
-                            <div>
-                                <p>Rest</p>
-                                <TextField label="Rest" value={results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">seconds</InputAdornment>}}/>
-                            </div>
+                                <Typography className={classes.formEl}>{i + 1}</Typography>
+                                <TextField className={classes.formEl} label="Work" value={res.results[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <Checkbox checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
 
-                        </form>)}):(scheme.name.includes('Warmup') || scheme.name.includes('Dynamic'))? sets.map((set, i) =>{
+                        </form>)}):((scheme.name.includes('Warmup') || scheme.name.includes('Dynamic')) && sets)? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
-                            <div>
-                                <p>Set</p>
-                                <p>{i + 1}</p>
-                            </div>
-                            <div>
-                                <p>Reps</p>
-                                <TextField label="Reps" value={results[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment position="end">Reps</InputAdornment>}}/>
-                            </div>
-                            <div>
-                                <p>Rest</p>
-                                <TextField label="Rest" value={results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">seconds</InputAdornment>}}/>
-                            </div>
+                                <Typography className={classes.formEl}>{i + 1}</Typography>
+                                <TextField className={classes.formEl} label="Reps" value={res.results[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment position="end">Reps</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <Checkbox checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
 
-                        </form>)}) : sets.map((set, i) =>{
+                        </form>)}) : sets? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
-                            <div>
-                                <p>Set</p>
-                                <p>{i + 1}</p>
-                            </div>
-                            <div>
-                                <p>Work</p>
-                                <TextField label="Work" value={results[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment position="end">seconds</InputAdornment>}}/>
-                            </div>
+                                <Typography className={classes.formEl}>{i + 1}</Typography>
+                                <TextField className={classes.formEl} label="Work" value={res.results[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <input type="checkbox" checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
 
-                        </form>)})}
+                        </form>)}) : null}
             <CardActions>
             </CardActions>
         </Card>
