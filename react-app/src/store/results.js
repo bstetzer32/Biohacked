@@ -50,8 +50,22 @@ export const getResults = (exercise) => async (dispatch) => {
         
     }
 
-    dispatch(setResults({[exercise.id]:res}));
+    dispatch(setResults({[exercise.id]:{results:res, sets: sets}}));
     return sets
+};
+
+export const sendResults = (results) => async (dispatch) => {
+    await fetch(`/api/results`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({  
+            results
+        })
+    });
+
+    return {}
 };
 
 

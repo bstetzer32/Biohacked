@@ -37,54 +37,67 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function ExerciseTile({exercise}) {
+    const [isLoaded, setIsLoaded] = useState(false)
     const res = useSelector(state=>state.results[exercise.id])
+    const results = {...res?.results}
+    console.log(results)
     const dispatch = useDispatch()
     const classes = useStyles()
     const scheme = exercise.scheme
-    const sets = res ? Array.from(res) : []
+    let sets =  res?.sets
     useEffect(()=>{
-        
-    },[])
+        if (!sets){
+            sets = Array.from(results)
+            console.log(sets)
+
+        }
+    },[results, res])
 
     const handleLoadChange = (e) => {
         const i = e.target.name.split('-')[e.target.name.split('-').length -1]
         // console.log(e.target)
-        res[i].load = e.target.value
-        dispatch(setResults({[exercise.id]: res}))
+        results[i].load = e.target.value
+        dispatch(setResults({[exercise.id]: {results: results, sets: sets}}))
     }    
     const handleRepChange = (e) => {
         const i = e.target.name.split('-')[e.target.name.split('-').length -1]
         // console.log(e.target)
-        res[i].reps = e.target.value
-        dispatch(setResults({[exercise.id]: res}))
+        results[i].reps = e.target.value
+        dispatch(setResults({[exercise.id]: {results: results, sets: sets}}))
     }    
     const handleWorkChange = (e) => {
         const i = e.target.name.split('-')[e.target.name.split('-').length -1]
         // console.log(e.target)
-        res[i].time = e.target.value
-        dispatch(setResults({[exercise.id]: res}))
+        results[i].time = e.target.value
+        dispatch(setResults({[exercise.id]: {results: results, sets: sets}}))
     }    
     const handleRestChange = (e) => {
         const i = e.target.name.split('-')[e.target.name.split('-').length -1]
         // console.log(e.target)
-        res[i].rest = e.target.value
-        dispatch(setResults({[exercise.id]: res}))
+        results[i].rest = e.target.value
+        dispatch(setResults({[exercise.id]: {results: results, sets: sets}}))
     }    
     const handleCheckedChange = (e) => {
         const i = e.target.name.split('-')[e.target.name.split('-').length -1]
         // console.log(e.target)
-        res[i].checked = e.target.checked
-        dispatch(setResults({[exercise.id]: res}))
+        results[i].checked = e.target.checked
+        dispatch(setResults({[exercise.id]: {results: results, sets: sets}}))
+        setIsLoaded(true)
     }
-
+    
     useEffect(()=>{
-        if (!res) {
-            dispatch(getResults(exercise))
-            
-        }
+            if (!res) {
+                dispatch(getResults(exercise)).then(()=>{
+                    setIsLoaded(true)
+                })
+                
+            } else {
+                setIsLoaded(true)
+            }
+        
     },[res, dispatch, exercise])
 
-    if (!res || !sets.length) {
+    if (!res || !isLoaded) {
         return null
     }
     return (
@@ -114,35 +127,35 @@ export default function ExerciseTile({exercise}) {
                 
             </CardContent>
             {exercise.max === 0 && (scheme.name !== 'Warmup' && scheme.name !== 'Stretch' && scheme.name !== "Cooldown" && !scheme.name.includes("Core")) &&<Typography className={classes.formEl}>Since this is your first time logging this workout, start with a weight you feel comfotable with (it's always safer to underestimate).<br/> Once you log this exercise, our algorithms will update the values for your next session.</Typography>}
-                {(scheme.name.includes('Compound') || scheme.name.includes('Isolated')) ? sets.map((set, i) =>{
+                {((scheme.name.includes('Compound') || scheme.name.includes('Isolated')) && sets) ? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
                                 <Typography className={classes.formEl}>{i + 1}</Typography>
-                                <TextField className={classes.formEl} label="Reps" value={res[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment position="end">Reps</InputAdornment>}}/>
-                                <TextField className={classes.formEl} label="Load" value={res[i].load} name={`load-${i}`} onChange={handleLoadChange} InputProps={{endAdornment:<InputAdornment position="end">Lb</InputAdornment>}}/>
-                                <TextField className={classes.formEl} label="Rest" value={res[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
-                                <Checkbox checked={res[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
+                                <TextField className={classes.formEl} label="Reps" value={res.results[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment position="end">Reps</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Load" value={res.results[i].load} name={`load-${i}`} onChange={handleLoadChange} InputProps={{endAdornment:<InputAdornment position="end">Lb</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <Checkbox checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
                         </form>)
-                }): (scheme.name.includes('Stretch') || scheme.name.includes('Static')|| scheme.name.includes('TABATA')) ? sets.map((set, i) =>{
+                }): ((scheme.name.includes('Stretch') || scheme.name.includes('Static')|| scheme.name.includes('TABATA')) && sets) ? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
                                 <Typography className={classes.formEl}>{i + 1}</Typography>
-                                <TextField className={classes.formEl} label="Work" value={res[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
-                                <TextField className={classes.formEl} label="Rest" value={res[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
-                                <Checkbox checked={res[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
+                                <TextField className={classes.formEl} label="Work" value={res.results[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <Checkbox checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
 
-                        </form>)}):(scheme.name.includes('Warmup') || scheme.name.includes('Dynamic'))? sets.map((set, i) =>{
+                        </form>)}):((scheme.name.includes('Warmup') || scheme.name.includes('Dynamic')) && sets)? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
                                 <Typography className={classes.formEl}>{i + 1}</Typography>
-                                <TextField className={classes.formEl} label="Reps" value={res[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment position="end">Reps</InputAdornment>}}/>
-                                <TextField className={classes.formEl} label="Rest" value={res[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
-                                <Checkbox checked={res[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
+                                <TextField className={classes.formEl} label="Reps" value={res.results[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment position="end">Reps</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <Checkbox checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
 
-                        </form>)}) : sets.map((set, i) =>{
+                        </form>)}) : sets? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
                                 <Typography className={classes.formEl}>{i + 1}</Typography>
-                                <TextField className={classes.formEl} label="Work" value={res[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
-                                <input type="checkbox" checked={res[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
+                                <TextField className={classes.formEl} label="Work" value={res.results[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <input type="checkbox" checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
 
-                        </form>)})}
+                        </form>)}) : null}
             <CardActions>
             </CardActions>
         </Card>

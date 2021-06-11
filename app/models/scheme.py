@@ -1,6 +1,6 @@
 from sqlalchemy.orm import backref
 from .db import db
-from .scheme_set_rep import scheme_set_rep
+# from .scheme_set_rep import scheme_set_rep
 
 
 class Scheme(db.Model):

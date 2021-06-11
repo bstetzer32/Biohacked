@@ -5,7 +5,7 @@ class WorkoutExercise(db.Model):
     __tablename__ = 'workout_exercises'
 
     id = db.Column(db.Integer, primary_key=True)
-    max = db.Column(db.Integer, nullable=False)
+    max = db.Column(db.Float, nullable=False)
     scheme_id = db.Column(db.Integer, db.ForeignKey("schemes.id"))
     workout_id = db.Column(db.Integer, db.ForeignKey("workouts.id"))
     exercise_id = db.Column(db.Integer, db.ForeignKey("exercises.id"),
