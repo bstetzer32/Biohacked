@@ -23,10 +23,12 @@ class Workout(db.Model):
         }
 
     def to_routine_dict(self):
+        exercises = sorted([exercise.to_workout_dict()
+                           for exercise in self.workout_exercises],
+                           key=lambda i: i['order'])
 
         return {
             "id": self.id,
             "order": self.order,
-            "exercises": [exercise.to_workout_dict() for exercise in self
-                          .workout_exercises]
+            "exercises": exercises
         }

@@ -109,6 +109,11 @@ const NavBar = (props) => {
                 <ListItemText primary="Routines"/>
             </ListItem>
               </NavLink>
+              <NavLink to="/results" exact={true} activeClassName="active">
+            <ListItem button>
+                <ListItemText primary="Results"/>
+            </ListItem>
+              </NavLink>
             <ListItem button>
               <LogoutButton />
             </ListItem>

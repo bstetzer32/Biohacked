@@ -8,8 +8,10 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import RoutinesPage from "./components/RoutinesPage";
 import RoutinePage from "./components/RoutinePage";
 import WorkoutPage from "./components/WorkoutPage";
+import ResultsPage from "./components/ResultsPage"
+import ResultPage from "./components/ResultPage"
 import Questionnaire from './components/Questionnaire'
-// import User from "./components/User";
+import RoutineResultsPage from "./components/RoutineResultsPage";
 import { authenticate } from "./store/session";
 import { Typography, Card } from "@material-ui/core";
 
@@ -41,6 +43,15 @@ function App() {
         </Route>
         <ProtectedRoute path="/routines" exact={true} >
           <RoutinesPage/>
+        </ProtectedRoute>
+        <ProtectedRoute path="/results" exact={true} >
+          <ResultsPage/>
+        </ProtectedRoute>
+        <ProtectedRoute path="/results/:id/result/:resultId">
+          <ResultPage/>
+        </ProtectedRoute>
+        <ProtectedRoute path="/results/:id" exact={true} >
+          <RoutineResultsPage/>
         </ProtectedRoute>
         <ProtectedRoute path="/routines/:id/workouts/:workoutId">
           <WorkoutPage/>

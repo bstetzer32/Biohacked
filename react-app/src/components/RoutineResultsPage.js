@@ -1,7 +1,7 @@
 import React, { } from "react";
 import {Link, useParams} from 'react-router-dom'
 import { useSelector } from "react-redux";
-import WorkoutTile from "./WorkoutTile";
+import ResultsTile from "./ResultsTile";
 import { makeStyles } from '@material-ui/core/styles';
 import {Card, Typography, Button } from '@material-ui/core';
 // import CardActionArea from '@material-ui/core/CardActionArea';
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function RoutinePage() {
+export default function RoutineResultsPage() {
     const { id }  = useParams();
     const routines = useSelector(state => state.session.user.routines)
     const routine = routines.find(routine => routine.id === parseInt(id))
@@ -48,7 +48,7 @@ export default function RoutinePage() {
     return (
         <div className={classes.root}>
             <Card className={classes.card}> 
-                <Link to={`/routines`} className={classes.back}>
+                <Link to={`/results`} className={classes.back}>
                     <Button>
                         <FontAwesomeIcon icon={faArrowLeft}/>
                         <Typography variant="button">Back</Typography>
@@ -61,7 +61,7 @@ export default function RoutinePage() {
             <Typography>Lever Equipment: {routine.questionnaire.lever ? "Yes" : "No"}</Typography>
             <Typography>Started On: {routine.created_at}</Typography>
             </Card>
-            {routine.workouts.map((workout, i) => <WorkoutTile workout={workout} key={`workout${i}`} id={id} />) }
+            {routine.results.map((result, i) => <ResultsTile result={result} key={`result${i}`} id={id} />) }
         </div>
     )
 }

@@ -32,7 +32,13 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "space-between",
     },
     formEl: {
-        margin: "5%"
+        margin: "5%",
+        minWidth: "5%"
+    },
+    decorator: {
+        [theme.breakpoints.down('sm')]: {
+        display: "none"
+        }
     }
 }))
 
@@ -130,30 +136,30 @@ export default function ExerciseTile({exercise}) {
                 {((scheme.name.includes('Compound') || scheme.name.includes('Isolated')) && sets) ? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
                                 <Typography className={classes.formEl}>{i + 1}</Typography>
-                                <TextField className={classes.formEl} label="Reps" value={res.results[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment position="end">Reps</InputAdornment>}}/>
-                                <TextField className={classes.formEl} label="Load" value={res.results[i].load} name={`load-${i}`} onChange={handleLoadChange} InputProps={{endAdornment:<InputAdornment position="end">Lb</InputAdornment>}}/>
-                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Reps" value={res.results[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment  className={classes.decorator} position="end">Reps</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Load" value={res.results[i].load} name={`load-${i}`} onChange={handleLoadChange} InputProps={{endAdornment:<InputAdornment  className={classes.decorator} position="end">Lb</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment  className={classes.decorator} position="end">sec</InputAdornment>}}/>
                                 <Checkbox checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
                         </form>)
                 }): ((scheme.name.includes('Stretch') || scheme.name.includes('Static')|| scheme.name.includes('TABATA')) && sets) ? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
                                 <Typography className={classes.formEl}>{i + 1}</Typography>
-                                <TextField className={classes.formEl} label="Work" value={res.results[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
-                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Work" value={res.results[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment  className={classes.decorator} position="end">sec</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment  className={classes.decorator} position="end">sec</InputAdornment>}}/>
                                 <Checkbox checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
 
                         </form>)}):((scheme.name.includes('Warmup') || scheme.name.includes('Dynamic')) && sets)? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
                                 <Typography className={classes.formEl}>{i + 1}</Typography>
-                                <TextField className={classes.formEl} label="Reps" value={res.results[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment position="end">Reps</InputAdornment>}}/>
-                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Reps" value={res.results[i].reps} name={`reps-${i}`} onChange={handleRepChange} InputProps={{endAdornment:<InputAdornment  className={classes.decorator} position="end">Reps</InputAdornment>}}/>
+                                <TextField className={classes.formEl} label="Rest" value={res.results[i].rest} name={`rest-${i}`} onChange={handleRestChange} InputProps={{endAdornment:<InputAdornment  className={classes.decorator} position="end">sec</InputAdornment>}}/>
                                 <Checkbox checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
 
                         </form>)}) : sets? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
                                 <Typography className={classes.formEl}>{i + 1}</Typography>
-                                <TextField className={classes.formEl} label="Work" value={res.results[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment position="end">sec</InputAdornment>}}/>
-                                <input type="checkbox" checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
+                                <TextField className={classes.formEl} label="Work" value={res.results[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment  className={classes.decorator} position="end">sec</InputAdornment>}}/>
+                                <Checkbox type="checkbox" checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
 
                         </form>)}) : null}
             <CardActions>

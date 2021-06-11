@@ -5,6 +5,7 @@ class WorkoutExercise(db.Model):
     __tablename__ = 'workout_exercises'
 
     id = db.Column(db.Integer, primary_key=True)
+    order = db.Column(db.Integer)
     max = db.Column(db.Float, nullable=False)
     scheme_id = db.Column(db.Integer, db.ForeignKey("schemes.id"))
     workout_id = db.Column(db.Integer, db.ForeignKey("workouts.id"))
@@ -22,19 +23,34 @@ class WorkoutExercise(db.Model):
         return {
             "id": self.id,
             "max": self.max,
+            "order": self.order,
             "workout_id": self.workout_id,
             "exercise_id": self.exercise_id
         }
 
     def to_workout_dict(self):
-
+        results = sorted([result.to_exercise_dict()
+                         for result in self.results], key=lambda i: i['id'])
         return {
             "id": self.id,
             "movement": self.exercise.movement.name,
             "modality": self.exercise.modality,
             "max": self.max,
+            "order": self.order,
             "exercise_id": self.exercise_id,
             "api_id": self.exercise.api_id,
-            "results": [result.to_exercise_dict() for result in self.results],
+            "results": results,
+            "scheme": self.scheme.to_exercise_dict()
+        }
+
+    def to_result_dict(self):
+        return {
+            "id": self.id,
+            "movement": self.exercise.movement.name,
+            "modality": self.exercise.modality,
+            "max": self.max,
+            "order": self.order,
+            "exercise_id": self.exercise_id,
+            "api_id": self.exercise.api_id,
             "scheme": self.scheme.to_exercise_dict()
         }

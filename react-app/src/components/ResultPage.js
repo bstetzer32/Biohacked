@@ -1,7 +1,7 @@
 import React, { } from "react";
 import {Link, useParams} from 'react-router-dom'
 import { useSelector, useDispatch, useStore } from "react-redux";
-import ExerciseTile from "./ExerciseTile";
+import ResultTile from "./ResultTile";
 import { makeStyles } from '@material-ui/core/styles';
 import {Card, Button, Typography } from '@material-ui/core';
 // import CardActionArea from '@material-ui/core/CardActionArea';
@@ -36,55 +36,45 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function WorkoutPage() {
-    const { id, workoutId }  = useParams();
+export default function ResultPage() {
+    const { id, resultId }  = useParams();
     const routines = useSelector(state => state.session.user.routines)
-    const getStore = useStore()
     const dispatch = useDispatch()
     const routine = routines?.find(routine => routine.id === parseInt(id))
-    const workout = routine?.workouts.find(workout=> workout.id === parseInt(workoutId))
+    const sets = routine?.results.find(result=> result.id === parseInt(resultId))
     const classes = useStyles()
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-
-        const store = getStore.getState()
-        console.log(store.results)
-        dispatch(sendResults(store.results, routine.id)).then(
-            ()=> {dispatch(authenticate()).then(
-                    ()=>{dispatch(clearResults())
-                })
-            }
-        )
-    }
-
-    if (!workout) {
-        dispatch(authenticate())
-
-        return (
-            <div className={classes.root}>
-                <Typography variant="h4">Loading...</Typography>
-            <Card className={classes.card}> 
-            </Card>
-            </div>
-        )
+    const exercises = {}
+    sets.results.forEach(set => {
+        if (!(set.exercise.id in exercises)) {
+            exercises[set.exercise.id] = set.exercise
+            exercises[set.exercise.id].sets = []
+            exercises[set.exercise.id].sets.push(set)
+        } else {
+            exercises[set.exercise.id].sets.push(set)
+        }
+    });
+    const results = []
+    for (const id in exercises) {
+        if (Object.hasOwnProperty.call(exercises, id)) {
+            const element = exercises[id];
+            results.push(element)
+        }
     }
 
 
     return (
         <div className={classes.root}>
             <Card className={classes.card}> 
-                <Link to={`/routines/${id}`} className={classes.back}>
+                <Link to={`/results/${id}`} className={classes.back}>
                     <Button>
                         <FontAwesomeIcon icon={faArrowLeft}/>
                         <Typography variant="button">Back</Typography>
                     </Button>
                 </Link> 
-                <Typography variant="h4">Day {workout.order}</Typography>
+                <Typography variant="h4">{sets.order}</Typography>
                 <Button disabled></Button>
             </Card>
-            {workout.exercises.map((exercise, i) => <ExerciseTile exercise={exercise} key={`exercise-tile${exercise.id}`}/>) }
-            <Button onClick={handleSubmit}>Submit Workout</Button>
+            {results.map((result, i) => <ResultTile exercise={result} key={`result-tile${result.id}`}/>)}
         </div>
     )
 }

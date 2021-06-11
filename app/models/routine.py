@@ -1,3 +1,4 @@
+import re
 from .db import db
 import datetime
 
@@ -15,6 +16,8 @@ class Routine(db.Model):
     questionnaire = db.relationship("Questionnaire", back_populates="routine")
     workouts = db.relationship(
         "Workout", back_populates="routine", cascade="all, delete")
+    results = db.relationship("RoutineResult",
+                              back_populates="routine")
 
     def to_dict(self):
 
@@ -26,11 +29,15 @@ class Routine(db.Model):
         }
 
     def to_user_dict(self):
+        results = sorted([result.to_routine_dict()
+                         for result in self.results],
+                         key=lambda i: i['created_at'])
 
         return {
             "id": self.id,
             "questionnaire": self.questionnaire.to_routine_dict(),
             "created_at": self.created_at,
             "workouts": [workout.to_routine_dict() for workout in self
-                         .workouts]
+                         .workouts],
+            "results": results
         }
