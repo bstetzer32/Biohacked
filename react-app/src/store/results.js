@@ -59,14 +59,15 @@ export const getResults = (exercise) => async (dispatch) => {
     return sets
 };
 
-export const sendResults = (results) => async (dispatch) => {
+export const sendResults = (results, id) => async (dispatch) => {
     await fetch(`/api/results`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({  
-            results
+            results,
+            id
         })
     });
 

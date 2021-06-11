@@ -11,9 +11,12 @@ class WorkoutExerciseResult(db.Model):
     load = db.Column(db.Integer)
     time = db.Column(db.Integer)
     rest = db.Column(db.Integer)
+    routine_result_id = db.Column(
+        db.Integer, db.ForeignKey("routine_results.id"))
     workout_exercise_id = db.Column(
         db.Integer, db.ForeignKey("workout_exercises.id"))
-
+    routine_result = db.relationship(
+        "RoutineResult", back_populates="results")
     workout_exercise = db.relationship("WorkoutExercise",
                                        back_populates="results")
 
@@ -38,6 +41,7 @@ class WorkoutExerciseResult(db.Model):
             "load": self.load,
             "time": self.time,
             "rest": self.rest,
-            "scheme": self.workout_exercise.scheme.name
+            "scheme": self.workout_exercise.scheme.name,
+            "exercise": self.workout_exercise.to_result_dict()
         }
         return results

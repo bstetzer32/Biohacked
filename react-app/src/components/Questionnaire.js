@@ -77,7 +77,27 @@ export default function Questionnaire() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        if (!parq1||
+        if (!parq1  ||
+            !parq2 ||
+            !parq3 ||
+            !parq4 ||
+            !parq5 ||
+            !parq6 ||
+            !parq7 ||
+            !barbell||
+            !dumbbell||
+            !cable||
+            !lever||
+            !goal) {
+            setErrors(["Please choose an option for each select field."])
+        }
+        if ((parq1 || parq2 || parq3 || parq4 || parq5 || parq6 || parq7) === 'yes') {
+            setErrors((prevErrors)=> ([...prevErrors, "You answered yes to one of the first seven questions. Our system is not capable of recommending a workout for you at this time, as we would require your doctor's approval and stipulations."]))
+        }
+        if (parseInt(age) > 69) {
+            setErrors((prevErrors)=> ([...prevErrors, "You answered that you are over the age of 69."]))
+        }
+        if ((parq1 || parq2 || parq3 || parq4 || parq5 || parq6 || parq7) === 'yes' || parseInt(age) > 69 || (!parq1||
             !parq2||
             !parq3||
             !parq4||
@@ -88,30 +108,7 @@ export default function Questionnaire() {
             !dumbbell||
             !cable||
             !lever||
-            !goal) {
-            setErrors(["Please choose an option for each select field."])
-        }
-        if ((parq1 || parq2 || parq3 || parq4 || parq5 || parq6 || parq7) === 'yes') {
-            setErrors((prevErrors)=> ([...prevErrors, "You answered yes to one of the first seven questions."]))
-        }
-        if (parseInt(age) > 69) {
-            setErrors((prevErrors)=> ([...prevErrors, "You answered that you are over the age of 69."]))
-            handleOpen()
-            // console.log(errors)
-            return
-        }
-        if ((parq1 || parq2 || parq3 || parq4 || parq5 || parq6 || parq7) === 'yes' || parseInt(age) > 69 || !(parq1||
-            parq2||
-            parq3||
-            parq4||
-            parq5||
-            parq6||
-            parq7||
-            barbell||
-            dumbbell||
-            cable||
-            lever||
-            goal)) {
+            !goal)) {
             handleOpen()
             return
         }

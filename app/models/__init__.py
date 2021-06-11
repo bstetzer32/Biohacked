@@ -8,3 +8,4 @@ from .exercise import Exercise
 from .scheme import Scheme
 from .questionnaire import Questionnaire
 from .routine import Routine
+from .routine_result import RoutineResult

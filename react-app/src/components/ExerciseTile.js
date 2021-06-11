@@ -159,7 +159,7 @@ export default function ExerciseTile({exercise}) {
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
                                 <Typography className={classes.formEl}>{i + 1}</Typography>
                                 <TextField className={classes.formEl} label="Work" value={res.results[i].time} name={`work-${i}`} onChange={handleWorkChange} InputProps={{endAdornment:<InputAdornment  className={classes.decorator} position="end">sec</InputAdornment>}}/>
-                                <input type="checkbox" checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
+                                <Checkbox type="checkbox" checked={res.results[i].checked} onChange={handleCheckedChange} name={`checked-${i}`} color="primary"/>
 
                         </form>)}) : null}
             <CardActions>
