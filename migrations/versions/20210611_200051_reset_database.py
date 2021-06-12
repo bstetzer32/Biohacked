@@ -1,8 +1,8 @@
-"""reset
+"""reset database
 
-Revision ID: 888e51558184
+Revision ID: 4efa5886296d
 Revises: 
-Create Date: 2021-06-08 18:11:02.165716
+Create Date: 2021-06-11 20:00:51.642276
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '888e51558184'
+revision = '4efa5886296d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -89,6 +89,13 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('routine_results',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.Column('routine_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['routine_id'], ['routines.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('workouts',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('order', sa.Integer(), nullable=False),
@@ -98,7 +105,8 @@ def upgrade():
     )
     op.create_table('workout_exercises',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('max', sa.Integer(), nullable=False),
+    sa.Column('order', sa.Integer(), nullable=True),
+    sa.Column('max', sa.Float(), nullable=False),
     sa.Column('scheme_id', sa.Integer(), nullable=True),
     sa.Column('workout_id', sa.Integer(), nullable=True),
     sa.Column('exercise_id', sa.Integer(), nullable=False),
@@ -114,7 +122,9 @@ def upgrade():
     sa.Column('load', sa.Integer(), nullable=True),
     sa.Column('time', sa.Integer(), nullable=True),
     sa.Column('rest', sa.Integer(), nullable=True),
+    sa.Column('routine_result_id', sa.Integer(), nullable=True),
     sa.Column('workout_exercise_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['routine_result_id'], ['routine_results.id'], ),
     sa.ForeignKeyConstraint(['workout_exercise_id'], ['workout_exercises.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -126,6 +136,7 @@ def downgrade():
     op.drop_table('workout_exercise_results')
     op.drop_table('workout_exercises')
     op.drop_table('workouts')
+    op.drop_table('routine_results')
     op.drop_table('routines')
     op.drop_table('questionnaires')
     op.drop_table('exercises')
