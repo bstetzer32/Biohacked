@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import {Link} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardActions, Typography, TextField, InputAdornment, FormControl, Checkbox } from '@material-ui/core';
+import { Card, CardActions, Typography, TextField, InputAdornment, Checkbox } from '@material-ui/core';
 // import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 // import CardMedia from '@material-ui/core/CardMedia';
@@ -11,8 +11,6 @@ import CardContent from '@material-ui/core/CardContent';
 // import { faDumbbell } from '@fortawesome/free-solid-svg-icons'
 import {setResults, getResults} from '../store/results'
 import ExerciseModal from './ExerciseModal'
-
-import {getExcercise} from '../store/exercises'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,13 +49,13 @@ export default function ExerciseTile({exercise}) {
     const classes = useStyles()
     const scheme = exercise.scheme
     let sets =  res?.sets
-    useEffect(()=>{
-        if (!sets){
-            sets = Array.from(results)
-            // console.log(sets)
+    // useEffect(()=>{
+    //     if (!sets){
+    //         sets = Array.from(results)
+    //         // console.log(sets)
 
-        }
-    },[results, res])
+    //     }
+    // },[results, res])
 
     const handleLoadChange = (e) => {
         const i = e.target.name.split('-')[e.target.name.split('-').length -1]

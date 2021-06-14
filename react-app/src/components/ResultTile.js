@@ -1,5 +1,5 @@
 import React from "react";
-import {  useSelector } from "react-redux";
+// import {  useSelector } from "react-redux";
 // import {Link} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardActions, Typography } from '@material-ui/core';
@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function ResultTile({exercise}) {
-    const res = useSelector(state=>state.results[exercise.id])
-    const results = {...res?.results}
+    // const res = useSelector(state=>state.results[exercise.id])
+    // const results = {...res?.results}
     // console.log(results)
     const classes = useStyles()
     const scheme = exercise.scheme
