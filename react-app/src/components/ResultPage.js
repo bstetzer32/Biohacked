@@ -1,6 +1,6 @@
 import React, { } from "react";
 import {Link, useParams} from 'react-router-dom'
-import { useSelector, useDispatch, useStore } from "react-redux";
+import { useSelector } from "react-redux";
 import ResultTile from "./ResultTile";
 import { makeStyles } from '@material-ui/core/styles';
 import {Card, Button, Typography } from '@material-ui/core';
@@ -9,8 +9,6 @@ import {Card, Button, Typography } from '@material-ui/core';
 // import CardMedia from '@material-ui/core/CardMedia';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import {sendResults, clearResults} from '../store/results'
-import { authenticate } from "../store/session";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ResultPage() {
     const { id, resultId }  = useParams();
     const routines = useSelector(state => state.session.user.routines)
-    const dispatch = useDispatch()
     const routine = routines?.find(routine => routine.id === parseInt(id))
     const sets = routine?.results.find(result=> result.id === parseInt(resultId))
     const classes = useStyles()

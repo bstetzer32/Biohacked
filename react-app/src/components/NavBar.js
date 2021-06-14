@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import LogoutButton from './auth/LogoutButton';
 // import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
-// import CssBaseline from '@material-ui/core/CssBaseline';
+import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 // import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-// import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 // import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -68,7 +68,8 @@ const NavBar = (props) => {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  // console.log(theme.breakpoints.up('sm'))
+  const [mobileOpen, setMobileOpen] = useState(false);
   const container = window !== undefined ? () => window().document.body : undefined;
   const user = useSelector(state => state.session.user)
   const loggedIn = user?.id
@@ -119,6 +120,21 @@ const NavBar = (props) => {
             </ListItem>
           </>
           }
+
+              <Link href="https://github.com/bstetzer32/Biohacked">
+            <ListItem button>
+                <ListItemText primary="GitHub"/>
+            </ListItem>
+              </Link>              
+              <Link href="https://www.linkedin.com/in/ben-stetzer-9334881ba/">
+            <ListItem button>
+                <ListItemText primary="LinkedIn"/>
+            </ListItem>
+              </Link>
+
+            <ListItem div>
+                <ListItemText primary="Copyright 2021 Biohacked, LLC"/>
+            </ListItem>
         </List>
         </>
   )
@@ -143,7 +159,6 @@ const NavBar = (props) => {
       </AppBar>
 
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
             container={container}
@@ -155,7 +170,7 @@ const NavBar = (props) => {
               paper: classes.drawerPaper,
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true
             }}
           >
             {drawer}
