@@ -4,7 +4,7 @@
 ## Live Link: [Biohacked](https://biohacked.herokuapp.com/)
 Biohacked is an original health and wellness app that uses a mixture of user input and the National Academy of Sports Medicine's Optimum Performance Training model to design fitness routines catered to the individuals needs and available equipment, and intelligently progresses the load after each workout using the Brzycki formula. All exercise media and description provided courtesey of [exrx.net](https://exrx.net)
 
-## For more information, check out the [Wiki](https://github.com/bstetzer/Biohacked/wiki)
+## For more information, check out the [Wiki](https://github.com/bstetzer32/Biohacked/wiki)
 
 * [Database Schema and Backend Routes](https://github.com/bstetzer32/Biohacked/wiki/Database-Schema-and-Backend-Routes)
 * [MVP Feature List](https://github.com/bstetzer32/Biohacked/wiki/MVP-Feature-List)
@@ -27,5 +27,6 @@ Biohacked is an original health and wellness app that uses a mixture of user inp
 ## Future Features
    * The ability to allow registration of ceritfied personal trainers for accounts able to build their own routines and share with others
    * The ability to search your area for a personal trainer.
-   * Nutritional recommendations.
+   * Working with other exercise professionals to allow for more dynamically programmed routines to address injuries and joint instability.
+   * Nutritional recommendations and meal planning and tracking.
 
