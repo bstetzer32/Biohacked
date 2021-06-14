@@ -61,7 +61,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "900",
     fontStyle: "italic",
     width: "100%"
-  }
+  },
+  navLink: {
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline"
+    }
+  },
+  
 }));
 
 const NavBar = (props) => {
@@ -84,7 +91,7 @@ const NavBar = (props) => {
       <div className={classes.toolbar} />
       <Divider />
         <List>
-            <NavLink to="/" exact={true} activeClassName="active">
+            <NavLink className={classes.navLink} to="/" exact={true} activeClassName="active">
           <ListItem button>
               <ListItemText primary="Home"/>
           </ListItem>
@@ -92,12 +99,12 @@ const NavBar = (props) => {
           {!loggedIn 
           ?
             <>
-              <NavLink to="/login" exact={true} activeClassName="active">
+              <NavLink className={classes.navLink} to="/login" exact={true} activeClassName="active">
             <ListItem button>
                 <ListItemText primary="Login"/>
             </ListItem>
               </NavLink>
-              <NavLink to="/sign-up" exact={true} activeClassName="active">
+              <NavLink className={classes.navLink} to="/sign-up" exact={true} activeClassName="active">
             <ListItem button>
                 <ListItemText primary="Sign Up"/>
           </ListItem>
@@ -105,12 +112,12 @@ const NavBar = (props) => {
           </>
           :
           <>
-              <NavLink to="/routines" exact={true} activeClassName="active">
+              <NavLink className={classes.navLink} to="/routines" exact={true} activeClassName="active">
             <ListItem button>
                 <ListItemText primary="Routines"/>
             </ListItem>
               </NavLink>
-              <NavLink to="/results" exact={true} activeClassName="active">
+              <NavLink className={classes.navLink} to="/results" exact={true} activeClassName="active">
             <ListItem button>
                 <ListItemText primary="Results"/>
             </ListItem>
