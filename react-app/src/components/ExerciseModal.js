@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactHlsPlayer from 'react-hls-player';
 import { useDispatch, useSelector } from "react-redux";
-import { Card, CardActions, Typography, CardContent, Button, Modal, CardMedia } from '@material-ui/core';
+import { Card, Typography, CardContent, Button, Modal, CardMedia } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 
