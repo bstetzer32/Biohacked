@@ -13,7 +13,8 @@ class RoutineResult(db.Model):
         db.Integer, db.ForeignKey("routines.id"), nullable=False)
     routine = db.relationship("Routine", back_populates="results")
     results = db.relationship("WorkoutExerciseResult",
-                              back_populates="routine_result")
+                              back_populates="routine_result",
+                              cascade="all, delete")
 
     def to_dict(self):
 
