@@ -17,7 +17,7 @@ class Routine(db.Model):
     workouts = db.relationship(
         "Workout", back_populates="routine", cascade="all, delete")
     results = db.relationship("RoutineResult",
-                              back_populates="routine")
+                              back_populates="routine", cascade="all, delete")
 
     def to_dict(self):
 
