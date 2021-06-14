@@ -33,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
         margin: "5%",
         minWidth: "5%"
     },
+    text: {
+        margin: "5%",
+        minWidth: "5%",
+        textAlign: "center",
+        lineHeight: "1.5"
+    },
     decorator: {
         [theme.breakpoints.down('sm')]: {
         display: "none"
@@ -131,6 +137,9 @@ export default function ExerciseTile({exercise}) {
                 
             </CardContent>
             {exercise.max === 0 && (scheme.name !== 'Warmup' && scheme.name !== 'Stretch' && scheme.name !== "Cooldown" && !scheme.name.includes("Core")) &&<Typography className={classes.formEl}>Since this is your first time logging this workout, start with a weight you feel comfotable with (it's always safer to underestimate).<br/> Once you log this exercise, our algorithms will update the values for your next session.</Typography>}
+            <Typography className={classes.text}>{`If you would like to see exercise instructions and videos/pictures, click on the "Media & Instructions" button.`}<br/><br/>
+            Always make sure you perform as many reps as possible on the last set, otherwise you won't progress!<br/><br/>
+            Only exercises with all sets checked will be recorded.</Typography>
                 {((scheme.name.includes('Compound') || scheme.name.includes('Isolated')) && sets) ? sets.map((set, i) =>{
                     return (<form className={classes.form} key={`exercise${exercise.id}set${i+1}`}>
                                 <Typography className={classes.formEl}>{i + 1}</Typography>
