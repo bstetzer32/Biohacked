@@ -66,6 +66,9 @@ function App() {
           <Card>
             <Typography variant="h5">
               Welcome to the Biohacked Fitness App.
+              </Typography>
+              <Typography variant="body1">
+              This is a health and wellness app that builds customized workout routines from the results of a questionnaire, tracks results of said questionnaire, and intelligently progresses load every time you record.
               <br/>
               <br/>
               Proceed to <Link to='/routines'>Routines</Link> to fill out a questionnaire and receive a peronalized workout.

@@ -46,7 +46,7 @@ export default function ExerciseTile({exercise}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const res = useSelector(state=>state.results[exercise.id])
     const results = {...res?.results}
-    console.log(results)
+    // console.log(results)
     const dispatch = useDispatch()
     const classes = useStyles()
     const scheme = exercise.scheme
@@ -54,7 +54,7 @@ export default function ExerciseTile({exercise}) {
     useEffect(()=>{
         if (!sets){
             sets = Array.from(results)
-            console.log(sets)
+            // console.log(sets)
 
         }
     },[results, res])

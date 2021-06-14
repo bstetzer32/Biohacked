@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import {  useSelector } from "react-redux";
 // import {Link} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardActions, Typography, TextField, InputAdornment, FormControl, Checkbox } from '@material-ui/core';
+import { Card, CardActions, Typography } from '@material-ui/core';
 // import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 // import CardMedia from '@material-ui/core/CardMedia';
 // import Button from '@material-ui/core/Button';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faDumbbell } from '@fortawesome/free-solid-svg-icons'
-import {setResults, getResults} from '../store/results'
 import ExerciseModal from './ExerciseModal'
-
-import {getExcercise} from '../store/exercises'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,11 +40,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function ResultTile({exercise}) {
-    const [isLoaded, setIsLoaded] = useState(false)
     const res = useSelector(state=>state.results[exercise.id])
     const results = {...res?.results}
-    console.log(results)
-    const dispatch = useDispatch()
+    // console.log(results)
     const classes = useStyles()
     const scheme = exercise.scheme
     let sets =  exercise.sets

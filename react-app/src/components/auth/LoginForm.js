@@ -9,22 +9,36 @@ import { TextField, Button, Card, Typography } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-        flexDirection: "column"
+        flexDirection: "column",
+        alignItems:"center"
     },
     form: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        width: "80%"
     },
     button: {
-        width: '50%',
-        margin: '0.5%',
+        width: '100%',
+        margin: '2.5%',
+        alignSelf: "center"
+    },
+    demoButton: {
+        width: '80%',
+        margin: '2.5%',
+        marginTop: '2.5%',
         alignSelf: "center"
     },
     input: {
-        width: '50%',
+        width: '100%',
         margin: '0.5%'
-    }
+    },
+    text: {
+        margin: '2.5%',
+        marginTop: '2.5%',
+        alignSelf: "center",
+        textAlign:"center"
+    },
 }))
 
 const LoginForm = () => {
@@ -86,10 +100,16 @@ const LoginForm = () => {
       <form onSubmit={onLogin} className={classes.form}>
       <Typography variant='h3'>Log In</Typography>
           <TextField className={classes.input} error={emailErrors !== ''} helperText={!email ? 'Please enter an email' : emailErrors ? emailErrors : null} value={email} label='Email' type='email' onChange={updateEmail} name="email"/>
-          <TextField className={classes.input} error={passwordErrors !== ''} helperText={!password ? 'Please enter a password' : passwordErrors ? passwordErrors : null} value={password} label='Password' type='password' onChange={updatePassword} name="password"/>
+          <TextField className={classes.input} error={passwordErrors !== ''} helperText={!password ? 'Please enter a password' : passwordErrors ? passwordErrors : null} value={password} label='Password' type='password' onChange={updatePassword} name="password" autoComplete="password"/>
           <Button type="submit" className={classes.button} variant="contained">Login</Button>
       </form>
-      <Button type="submit" onClick={demoLogin} className={classes.button} variant="contained">Demo Login</Button>
+      <Button type="submit" onClick={demoLogin} className={classes.demoButton} variant="contained">Demo Login</Button>
+      <Typography className={classes.text} variant='h5'>
+        Welcome to Biohacked!
+      </Typography>
+      <Typography className={classes.text} variant='subtitle1'>
+       This is a health and wellness app that builds customized workout routines from the results of a questionnaire, tracks results of said questionnaire, and intelligently progresses load every time you record.
+      </Typography>
     </Card>
   );
 };
