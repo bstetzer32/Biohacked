@@ -108,7 +108,7 @@ const LoginForm = () => {
         Welcome to Biohacked!
       </Typography>
       <Typography className={classes.text} variant='subtitle1'>
-       This is a health and wellness app that builds customized workout routines from the results of a questionnaire, tracks results of said questionnaire, and intelligently progresses load every time you record.
+       This is a health and wellness app that builds customized workout routines from the results of a questionnaire, provides instructions and a videos/photos for each exercise, tracks results of each workout, and intelligently increases load as you progress.
       </Typography>
     </Card>
   );
