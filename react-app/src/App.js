@@ -68,7 +68,7 @@ function App() {
               Welcome to the Biohacked Fitness App.
               </Typography>
               <Typography variant="body1">
-              This is a health and wellness app that builds customized workout routines from the results of a questionnaire, tracks results of said questionnaire, and intelligently progresses load every time you record.
+              This is a health and wellness app that builds customized workout routines from the results of a questionnaire, provides instructions and a videos/photos for each exercise, tracks results of each workout, and intelligently increases load as you progress.
               <br/>
               <br/>
               Proceed to <Link to='/routines'>Routines</Link> to fill out a questionnaire and receive a peronalized workout.
