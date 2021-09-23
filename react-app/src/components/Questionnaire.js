@@ -45,21 +45,21 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Questionnaire() {
-    const [parq1, setParq1] = useState('')
-    const [parq2, setParq2] = useState('')
-    const [parq3, setParq3] = useState('')
-    const [parq4, setParq4] = useState('')
-    const [parq5, setParq5] = useState('')
-    const [parq6, setParq6] = useState('')
-    const [parq7, setParq7] = useState('')
-    const [barbell, setBarbell] = useState('')
-    const [dumbbell, setDumbbell] = useState('')
-    const [cable, setCable] = useState('')
-    const [lever, setLever] = useState('')
-    const [goal, setGoal] = useState('')
-    const [height, setHeight] = useState('')
-    const [weight, setWeight] = useState('')
-    const [age, setAge] = useState('')
+    const [parq1, setParq1] = useState("")
+    const [parq2, setParq2] = useState("")
+    const [parq3, setParq3] = useState("")
+    const [parq4, setParq4] = useState("")
+    const [parq5, setParq5] = useState("")
+    const [parq6, setParq6] = useState("")
+    const [parq7, setParq7] = useState("")
+    const [barbell, setBarbell] = useState("")
+    const [dumbbell, setDumbbell] = useState("")
+    const [cable, setCable] = useState("")
+    const [lever, setLever] = useState("")
+    const [goal, setGoal] = useState("")
+    const [height, setHeight] = useState("")
+    const [weight, setWeight] = useState("")
+    const [age, setAge] = useState("")
     const [errors, setErrors] = useState([])
     const [open, setOpen] = useState(false);
 
@@ -77,38 +77,42 @@ export default function Questionnaire() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        if (!parq1  ||
-            !parq2 ||
-            !parq3 ||
-            !parq4 ||
-            !parq5 ||
-            !parq6 ||
-            !parq7 ||
-            !barbell||
-            !dumbbell||
-            !cable||
-            !lever||
-            !goal) {
-            setErrors(["Please choose an option for each select field."])
-        }
-        if ((parq1 || parq2 || parq3 || parq4 || parq5 || parq6 || parq7) === 'yes') {
-            setErrors((prevErrors)=> ([...prevErrors, "You answered yes to one of the first seven questions. Our system is not capable of recommending a workout for you at this time, as we would require your doctor's approval and stipulations."]))
-        }
+        // setErrors([])
+        console.log({1: parq1, 2: parq2, 3: parq3, 4: parq4, 5: parq5, 6: parq6, 7: parq7, 8: barbell, 9: dumbbell, 10: cable, 11: lever, 12: goal})
+        if (
+          (parq1.length ||
+            parq2.length ||
+            parq3.length ||
+            parq4.length ||
+            parq5.length ||
+            parq6.length ||
+            parq7.length ||
+            barbell.length ||
+            dumbbell.length ||
+            cable.length ||
+            lever.length ||
+            goal.length) === 0
+        ) {
+          setErrors(["Please choose an option for each select field."]);
+        } 
+        
+        if (
+          (parq1 || parq2 || parq3 || parq4 || parq5 || parq6 || parq7) ===
+          "yes"
+        ) {
+          setErrors((prevErrors) => [
+            ...prevErrors,
+            "You answered yes to one of the first seven questions. Our system is not capable of recommending a workout for you at this time, as we would require your doctor's approval and stipulations.",
+          ]);
+        } 
         if (parseInt(age) > 69) {
-            setErrors((prevErrors)=> ([...prevErrors, "You answered that you are over the age of 69."]))
+          setErrors((prevErrors) => [
+            ...prevErrors,
+            "You answered that you are over the age of 69.",
+          ]);
         }
-        if ((parq1 || parq2 || parq3 || parq4 || parq5 || parq6 || parq7) === 'yes' || parseInt(age) > 69 || (!parq1||
-            !parq2||
-            !parq3||
-            !parq4||
-            !parq5||
-            !parq6||
-            !parq7||
-            !barbell||
-            !dumbbell||
-            !cable||
-            !lever||
-            !goal)) {
+        console.log(errors)
+        if (errors.length > 0) {
             handleOpen()
             return
         }
