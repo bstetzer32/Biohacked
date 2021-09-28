@@ -46,7 +46,20 @@ const SignUpForm = () => {
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      await dispatch(signUp(username, email, password));
+      const data = await dispatch(signUp(username, email, password));
+      if (data.errors) {
+        // console.log(data.errors)
+        data.errors.forEach((error) => {
+          if (error.includes("email")) {
+            setEmailErrors("Email already in use.");
+          }
+          if (error.includes("username")) {
+            setUsernameErrors("Username already in use.");
+          }
+        });
+      }
+    } else {
+      setRepeatPasswordErrors("Passwords must match.");
     }
   };
 
