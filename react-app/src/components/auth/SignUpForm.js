@@ -91,7 +91,7 @@ const SignUpForm = () => {
           <TextField className={classes.input} error={emailErrors !== ''} helperText={!email ? 'Please enter an email' : emailErrors ? emailErrors : null} value={email} label='Email' type='email' onChange={updateEmail} name="email" required/>
           <TextField className={classes.input} error={passwordErrors !== ''} helperText={!password ? 'Please enter a password' : passwordErrors ? passwordErrors : null} value={password} label='Password' type='password' onChange={updatePassword} name="password" required/>
           <TextField className={classes.input} error={repeatPasswordErrors !== ''} helperText={!repeatPassword ? 'Please repeat your password' : repeatPasswordErrors ? repeatPasswordErrors : null} value={repeatPassword} label='Repeat Password' type='password' onChange={updateRepeatPassword} name="password" required/>
-        {/* <div>
+        {/* <div>inter
           <label>User Name</label>
           <input
             type="text"
